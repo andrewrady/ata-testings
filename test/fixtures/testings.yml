@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: false
+  location: MyString
+  groups: one
+
+two:
+  status: false
+  location: MyString
+  groups: two
