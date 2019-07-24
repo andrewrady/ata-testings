@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
 
   def index
-    @student = Student.all
+    @students = Student.all
   end
 
   def show
@@ -16,7 +16,7 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
 
     if @student.save
-      redirct_to @student
+      redirect_to @student
     else
       render 'new'
     end
@@ -25,7 +25,7 @@ class StudentsController < ApplicationController
   def update
     @student = Student.find(params[:id])
 
-    if @student.update
+    if @student.update(student_params)
       redirect_to @student
     else
       render 'edit'
