@@ -1,0 +1,31 @@
+<%= form_with(model: testing, local: true) do |form| %>
+  <% if testing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(testing.errors.count, "error") %> prohibited this testing from being saved:</h2>
+
+      <ul>
+      <% testing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <p>
+      <%= form.label :date %>
+      <%= form.date_field :date %>
+    </p>
+
+    <p>
+      <%= form.label :status %>
+      <%= form.select :status, options_for_select({"Active" => "true", "Inactive" => "false"}) %>
+    </p>
+
+    <p>
+      <%= form.label :location %>
+      <%= form.text_field :location %>
+    </p>
+    <%= form.submit %>
+  </div>
+<% end %>
