@@ -6,6 +6,9 @@ class TestingsController < ApplicationController
 
   def show
     @testing = Testing.find(params[:id])
+    @currentStudents = @testing.participants.pluck :student_id
+    @student = Student.where.not(id: @currentStudents)
+
   end
 
   def new
@@ -45,6 +48,6 @@ class TestingsController < ApplicationController
 
   private
     def testing_params
-      params.require(:testing).permit(:status, :location, :date)
+      params.require(:testing).permit(:status, :location, :date, :student_id, :form, :sparring, :boardBreaks, :fit)
     end
 end

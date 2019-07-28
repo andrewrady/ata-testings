@@ -1,3 +1,3 @@
 class Testing < ApplicationRecord
-  has_many :groups
+  has_many :participants
 end

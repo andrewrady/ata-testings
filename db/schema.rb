@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190726194809) do
+ActiveRecord::Schema.define(version: 20190726224657) do
 
   create_table "groups", force: :cascade do |t|
     t.string "title"
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 20190726194809) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["testings_id"], name: "index_groups_on_testings_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.integer "testing_id"
+    t.integer "student_id"
+    t.integer "form"
+    t.integer "sparring"
+    t.integer "weapon"
+    t.integer "boardBreak"
+    t.integer "fit"
+    t.integer "total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "firstName"
+    t.string "lastName"
+    t.string "rank"
+    t.index ["student_id"], name: "index_participants_on_student_id"
+    t.index ["testing_id"], name: "index_participants_on_testing_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -36,13 +54,6 @@ ActiveRecord::Schema.define(version: 20190726194809) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "date"
-    t.integer "student_id"
-    t.integer "form"
-    t.integer "sparring"
-    t.integer "boardBreaks"
-    t.integer "fit"
-    t.string "group"
-    t.index ["student_id"], name: "index_testings_on_student_id"
   end
 
   create_table "users", force: :cascade do |t|

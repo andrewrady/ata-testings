@@ -1,5 +1,47 @@
 <h1><%= @testing.date.strftime("%m/%d/%Y") %></h2>
 <p id="notice"><%= notice %></p>
 
+<h2>participants</h2>
+<% if @student.length > 0 %>
+  <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
+
+    <%= form.label :student_id %>
+    <%= form.select :student_id, options_for_select(@student.map {|student| [ student.firstName, student.id]}) %>
+
+    <%= form.submit %>
+
+  <% end %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th>Forms</th>
+      <th>Weapons</th>
+      <th>Sparring</th>
+      <th>Board Breaks</th>
+      <th>Fit</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <% @testing.participants.each do |participant| %>
+      <td><%= participant.firstName %> <%= participant.lastName %></td>
+      <td><%= participant.rank %></td>
+      <td><%= participant.form %></td>
+      <td><%= participant.weapon %></td>
+      <td><%= participant.sparring %></td>
+      <td><%= participant.boardBreak %></td>
+      <td><%= participant.fit %></td>
+      <td><%= participant.total %></td>
+    <% end %>
+    </td>
+  </tbody>
+</table>
+
+
 <%= link_to 'Edit', edit_testing_path(@testing) %> |
 <%= link_to 'Back', testings_path %>
