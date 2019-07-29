@@ -6,9 +6,22 @@
   <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
 
     <%= form.label :student_id %>
-    <%= form.select :student_id, options_for_select(@student.map {|student| [ student.firstName, student.id]}) %>
+    <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name") %>
+
+    <%= form.hidden_field :firstName, value: @firstStudent.firstName, :id => "firstName" %>
+    <%= form.hidden_field :lastName, value: @firstStudent.lastName, :id => "lastName" %>
 
     <%= form.submit %>
+
+    <script>
+      let name = document.getElementById('name')
+      document.addEventListener('input', function(event) {
+        let name = event.target.options[event.target.selectedIndex].text;
+        let test = name.split(' ');
+        document.getElementById('firstName').value = test[0];
+        document.getElementById('lastName').value = test[1];
+      })
+    </script>
 
   <% end %>
 <% end %>
@@ -24,11 +37,12 @@
       <th>Board Breaks</th>
       <th>Fit</th>
       <th>Total</th>
+      <th>Remove</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
     <% @testing.participants.each do |participant| %>
+    <tr>
       <td><%= participant.firstName %> <%= participant.lastName %></td>
       <td><%= participant.rank %></td>
       <td><%= participant.form %></td>
@@ -37,8 +51,9 @@
       <td><%= participant.boardBreak %></td>
       <td><%= participant.fit %></td>
       <td><%= participant.total %></td>
+      <td><%= link_to 'Remove', [participant.testing, participant], method: :delete, data: { confirm: 'Are you sure?'} %>
+    </tr>
     <% end %>
-    </td>
   </tbody>
 </table>
 

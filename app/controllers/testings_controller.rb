@@ -8,6 +8,7 @@ class TestingsController < ApplicationController
     @testing = Testing.find(params[:id])
     @currentStudents = @testing.participants.pluck :student_id
     @student = Student.where.not(id: @currentStudents)
+    @firstStudent = @student.first
 
   end
 
