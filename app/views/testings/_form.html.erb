@@ -12,25 +12,25 @@
   <% end %>
 
   <div class="actions">
-    <p>
-      <%= form.label :date %>
-      <%= form.date_field :date %>
-    </p>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <%= form.date_field :date, :class => "form-control", placeholder: "Date" %>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <%= form.label :status %>
-      <%= form.select :status, options_for_select({"Active" => "true", "Inactive" => "false"}) %>
-    </p>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <%= form.select :status, options_for_select({"Active" => "true", "Inactive" => "false"}), {}, { class: "form-control" }%>
+        </div>
+        <div class="col">
+          <%= form.text_field :location, :class => "form-control", placeholder: "Location" %>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <%= form.label :location %>
-      <%= form.text_field :location %>
-    </p>
-
-    <br>
-
-    
-
-    <%= form.submit %>
+    <%= form.submit 'Submit', :class => "btn btn-primary" %>
   </div>
 <% end %>

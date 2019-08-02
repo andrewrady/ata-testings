@@ -47,6 +47,11 @@ class TestingsController < ApplicationController
     redirect_to testings_path
   end
 
+  def score
+    @testing = Testing.find(params[:testing_id])
+
+  end
+
   private
     def testing_params
       params.require(:testing).permit(:status, :location, :date, :student_id, :form, :sparring, :boardBreaks, :fit)

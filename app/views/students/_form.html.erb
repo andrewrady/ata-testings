@@ -12,27 +12,28 @@
   <% end %>
 
   <div class="actions">
-    
-    <p>
-      <%= form.label :firstName %>
-      <%= form.text_field :firstName %>
-    </p>
+    <div class="form-group">
+      <div class="form-row">  
+        <div class="col">
+          <%= form.text_field :firstName, :class => "form-control", placeholder: 'First Name' %>
+        </div>
+        <div class="col">
+          <%= form.text_field :lastName, :class => "form-control", placeholder: 'Last Name' %>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <%= form.label :lastName %>
-      <%= form.text_field :lastName %>
-    </p>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <%= form.text_field :rank, :class => "form-control", placeholder: "Rank" %>
+        </div>
+        <div class="col">
+          <%= form.number_field :size, :class => "form-control", placeholder: "Size" %>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <%= form.label  :rank %>
-      <%= form.text_field :rank %>
-    </p>
-
-    <p>
-      <%= form.label :size %>
-      <%= form.number_field :rank %>
-    </p>
-
-    <%= form.submit %>
+    <%= form.submit 'Submit', :class => "btn btn-primary" %>
   </div>
 <% end %>

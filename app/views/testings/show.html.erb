@@ -1,23 +1,27 @@
-<h1><%= @testing.date.strftime("%m/%d/%Y") %></h2>
+<h1>Testing Date: <%= @testing.date.strftime("%m/%d/%Y") %></h2>
 <p id="notice"><%= notice %></p>
 
-<h2>participants</h2>
 <% if @student.length > 0 %>
   <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
 
-    <%= form.label :student_id %>
-    <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name") %>
+    <div class="form-group">
+      <div class="form-row">
+        <%= form.label :student_id %>
+        <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name", :class => "form-control") %>
+      </div>
+    </div>
 
     <%= form.hidden_field :firstName, value: @firstStudent.firstName, :id => "firstName" %>
     <%= form.hidden_field :lastName, value: @firstStudent.lastName, :id => "lastName" %>
-
-    <%= form.submit %>
+    <div class="form-group">
+      <%= form.submit 'Submit', class: 'btn btn-primary' %>
+    </div>
 
     <script>
-      let name = document.getElementById('name')
+      var name = document.getElementById('name')
       document.addEventListener('input', function(event) {
-        let name = event.target.options[event.target.selectedIndex].text;
-        let test = name.split(' ');
+        var name = event.target.options[event.target.selectedIndex].text;
+        var test = name.split(' ');
         document.getElementById('firstName').value = test[0];
         document.getElementById('lastName').value = test[1];
       })
@@ -26,17 +30,12 @@
   <% end %>
 <% end %>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
       <th>Rank</th>
-      <th>Forms</th>
-      <th>Weapons</th>
-      <th>Sparring</th>
-      <th>Board Breaks</th>
-      <th>Fit</th>
-      <th>Total</th>
+      <th>Tested</th>
       <th>Remove</th>
     </tr>
   </thead>
@@ -44,19 +43,14 @@
     <% @testing.participants.each do |participant| %>
     <tr>
       <td><%= participant.firstName %> <%= participant.lastName %></td>
-      <td><%= participant.rank %></td>
-      <td><%= participant.form %></td>
-      <td><%= participant.weapon %></td>
-      <td><%= participant.sparring %></td>
-      <td><%= participant.boardBreak %></td>
-      <td><%= participant.fit %></td>
-      <td><%= participant.total %></td>
-      <td><%= link_to 'Remove', [participant.testing, participant], method: :delete, data: { confirm: 'Are you sure?'} %>
+      <td><%= participant.rank ? participant.rank : "NA" %></td>
+      <td><%= participant.total ? "Yes" : "No" %></td>
+      <td><%= link_to 'Remove', [participant.testing, participant], method: :delete,:class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
     </tr>
     <% end %>
   </tbody>
 </table>
 
 
-<%= link_to 'Edit', edit_testing_path(@testing) %> |
-<%= link_to 'Back', testings_path %>
+<%= link_to 'Edit', edit_testing_path(@testing), class: "btn btn-primary" %> 
+<%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
