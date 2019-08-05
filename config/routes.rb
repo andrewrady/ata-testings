@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :students
   resources :testings do
     get "/scores", :to => "testings#score"
-    post "/scores", :to => "testings#update_scores"
+    post "/scores", :to => "testings#processing"
     resources :participants
   end
 

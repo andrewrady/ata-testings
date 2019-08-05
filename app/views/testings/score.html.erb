@@ -1,5 +1,5 @@
 <h1>Score Sheet</h1>
-<%= form_for @testing do |f| %>
+<%= form_for @testing, :url => url_for(:controller => "testings", :action => "processing"), method: "post" do |f| %>
   <table class="table table-striped">
     <thead>
       <tr>

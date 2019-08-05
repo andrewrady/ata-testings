@@ -34,17 +34,6 @@ class TestingsController < ApplicationController
     @testing = Testing.find(params[:id])
 
     if @testing.update(testing_params)
-      if params.has_keys?(:participants_attributes)
-        params[:testing][:participants_attributes].each do |key, value|
-          if !value["total"].empty? && value["total"].to_i >= 3
-            @student = Student.find(value["student_id"])
-
-            @student.rank = "purple"
-            @student.save
-          end
-        end
-      end
-
       redirect_to @testing
     else
       render 'edit'
@@ -62,11 +51,20 @@ class TestingsController < ApplicationController
     @testing = Testing.find(params[:testing_id])
   end
 
-  def update_scores
-    @testing = Testing.find(params[:id])
+  def processing
+    @testing = Testing.find(params[:testing_id])
 
-    if 1.times { @testing.participants.build}
-      
+    if @testing.update(testing_params)
+      if params.has_key?(:participants_attributes)
+        params[:testing][:participants_attributes].each do |key, value|
+          if !value["total"].empty? && value["total"].to_i >= 3
+            @student = Student.find(value["student_id"])
+
+            @student.rank = "purple"
+            @student.save
+          end
+        end
+      end
       redirect_to testings_path(@testing)
     end
   end
