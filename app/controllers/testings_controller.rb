@@ -55,17 +55,15 @@ class TestingsController < ApplicationController
     @testing = Testing.find(params[:testing_id])
 
     if @testing.update(testing_params)
-      if params.has_key?(:participants_attributes)
-        params[:testing][:participants_attributes].each do |key, value|
-          if !value["total"].empty? && value["total"].to_i >= 3
-            @student = Student.find(value["student_id"])
+      params[:testing][:participants_attributes].each do |key, value|
+        if !value["total"].empty? && value["total"].to_i >= 3
+          @student = Student.find(value["student_id"])
 
-            @student.rank = "purple"
-            @student.save
-          end
+          @student.rank = "purple"
+          @student.save
         end
       end
-      redirect_to testings_path(@testing)
+      redirect_to @testing
     end
   end
 
