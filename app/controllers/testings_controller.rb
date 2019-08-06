@@ -66,6 +66,8 @@ class TestingsController < ApplicationController
           @student.save
         end
       end
+      @testing.status = false
+      @testing.save
       redirect_to @testing
     end
   end

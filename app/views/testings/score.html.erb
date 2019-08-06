@@ -1,32 +1,61 @@
 <h1>Score Sheet</h1>
-<%= form_for @testing, :url => url_for(:controller => "testings", :action => "processing"), method: "post" do |f| %>
+<% if @testing.status === true %>
+  <%= form_for @testing, :url => url_for(:controller => "testings", :action => "processing"), method: "post" do |f| %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Forms</th>
+          <th scope="col">Weapons</th>
+          <th scope="col">Boards</th>
+          <th scope="col">Sparring</th>
+          <th scope="col">Fit</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+          <%= f.fields_for :participants do |c| %>
+            <tr>
+              <td scope="col"><%= c.text_field :firstName, disabled: true %></td>
+              <td><%= c.number_field :form %></td>
+              <td><%= c.number_field :weapon %></td>
+              <td><%= c.number_field :boardBreak %></td>
+              <td><%= c.number_field :sparring %></td>
+              <td><%= c.number_field :fit %></td>
+              <td><%= c.number_field :total %></td>
+            </tr>
+            <%= c.hidden_field :student_id%>
+          <% end %>
+      </tbody>
+    </table>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  <% end%>
+<% else %>
   <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Forms</th>
-        <th scope="col">Weapons</th>
-        <th scope="col">Boards</th>
-        <th scope="col">Sparring</th>
-        <th scope="col">Fit</th>
-        <th scope="col">Total</th>
-      </tr>
-    </thead>
-    <tbody>
-        <%= f.fields_for :participants do |c| %>
-          <tr>
-            <td scope="col"><%= c.text_field :firstName, disabled: true %></td>
-            <td><%= c.number_field :form %></td>
-            <td><%= c.number_field :weapon %></td>
-            <td><%= c.number_field :boardBreak %></td>
-            <td><%= c.number_field :sparring %></td>
-            <td><%= c.number_field :fit %></td>
-            <td><%= c.number_field :total %></td>
-          </tr>
-          <%= c.hidden_field :student_id%>
-        <% end %>
-    </tbody>
-  </table>
-  <%= f.submit "Submit", class: "btn btn-primary" %>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Forms</th>
+          <th scope="col">Weapons</th>
+          <th scope="col">Boards</th>
+          <th scope="col">Sparring</th>
+          <th scope="col">Fit</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @testing.participants.each do |c| %>
+            <tr>
+              <td scope="col"><%= c.firstName %></td>
+              <td><%= c.form %></td>
+              <td><%= c.weapon %></td>
+              <td><%= c.boardBreak %></td>
+              <td><%= c.sparring %></td>
+              <td><%= c.fit %></td>
+              <td><%= c.total %></td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
 <% end%>
 
