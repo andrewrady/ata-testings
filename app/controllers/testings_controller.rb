@@ -58,8 +58,11 @@ class TestingsController < ApplicationController
       params[:testing][:participants_attributes].each do |key, value|
         if !value["total"].empty? && value["total"].to_i >= 3
           @student = Student.find(value["student_id"])
+          @ranks = ["White", "Orange", "Yellow", "Camo", "Green", "Purple", "Blue", "Brown Rec", "Brown Dec", "Red Rec", "Red Dec", "Rec Black Belt"]
+          @placement = @ranks.find_index(@student.rank)
+          @placement += 1
 
-          @student.rank = "purple"
+          @student.rank = @ranks[@placement]
           @student.save
         end
       end
