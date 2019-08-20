@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190726224657) do
+ActiveRecord::Schema.define(version: 20190813124410) do
 
   create_table "groups", force: :cascade do |t|
     t.string "title"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20190726224657) do
     t.string "firstName"
     t.string "lastName"
     t.string "rank"
+    t.text "categories"
     t.index ["student_id"], name: "index_participants_on_student_id"
     t.index ["testing_id"], name: "index_participants_on_testing_id"
   end

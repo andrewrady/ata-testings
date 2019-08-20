@@ -1,40 +1,42 @@
 <h1>Score Sheet</h1>
 <% if @testing.status === true %>
   <%= form_for @testing, :url => url_for(:controller => "testings", :action => "processing"), method: "post" do |f| %>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Forms</th>
-          <th scope="col">Weapons</th>
-          <th scope="col">Boards</th>
-          <th scope="col">Sparring</th>
-          <th scope="col">Fit</th>
-          <th scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-          <%= f.fields_for :participants do |c| %>
-            <tr>
-              <td scope="col"><%= c.text_field :firstName, disabled: true %></td>
-              <td><%= c.number_field :form %></td>
-              <td><%= c.number_field :weapon %></td>
-              <td><%= c.number_field :boardBreak %></td>
-              <td><%= c.number_field :sparring %></td>
-              <td><%= c.number_field :fit %></td>
-              <td><%= c.number_field :total %></td>
-            </tr>
-            <%= c.hidden_field :student_id%>
-          <% end %>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th class="twenty">Name</th>
+            <th scope="col">Forms</th>
+            <th scope="col">Weapons</th>
+            <th scope="col">Boards</th>
+            <th scope="col">Sparring</th>
+            <th scope="col">Fit</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+            <%= f.fields_for :participants do |c| %>
+              <tr>
+                <td class="twenty"><%= c.text_field :firstName, disabled: true %></td>
+                <td><%= c.number_field :form, disabled: !c.object.categories.include?('f') %></td>
+                <td><%= c.number_field :weapon, disabled: !c.object.categories.include?('w') %></td>
+                <td><%= c.number_field :boardBreak, disabled: !c.object.categories.include?('b') %></td>
+                <td><%= c.number_field :sparring, disabled: !c.object.categories.include?('s') %></td>
+                <td><%= c.number_field :fit %></td>
+                <td><%= c.number_field :total, disabled: true %></td>
+              </tr>
+              <%= c.hidden_field :student_id%>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
     <%= f.submit "Submit", class: "btn btn-primary" %>
   <% end%>
 <% else %>
   <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Name</th>
+          <th class="twenty">Name</th>
           <th scope="col">Forms</th>
           <th scope="col">Weapons</th>
           <th scope="col">Boards</th>
@@ -46,7 +48,7 @@
       <tbody>
           <% @testing.participants.each do |c| %>
             <tr>
-              <td scope="col"><%= c.firstName %></td>
+              <td><%= c.firstName %></td>
               <td><%= c.form %></td>
               <td><%= c.weapon %></td>
               <td><%= c.boardBreak %></td>

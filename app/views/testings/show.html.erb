@@ -7,8 +7,18 @@
 
     <div class="form-group">
       <div class="form-row">
-        <%= form.label :student_id %>
-        <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name", :class => "form-control") %>
+        <div class="col">
+          <%= form.label :student_id %>
+          <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name", :class => "form-control") %>
+        </div>
+        <div class="col">
+          <%= form.collection_check_boxes(:categories, {'Form': 'f', 'Sparring': 's', 'Weapons': 'w', 'Board Breaks': 'b'}, :last, :first) do |b| %>
+            <div class="form-check form-check-inline">
+              <%= b.check_box class: 'form-check-input' %>
+              <%= b.label class: 'form-check-label' %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
 
