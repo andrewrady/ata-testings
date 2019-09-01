@@ -15,17 +15,60 @@
           </tr>
         </thead>
         <tbody>
-            <%= f.fields_for :participants do |c| %>
-              <tr>
-                <td class="twenty"><%= c.text_field :firstName, disabled: true %></td>
-                <td><%= c.number_field :form, disabled: !c.object.categories.include?('f') %></td>
-                <td><%= c.number_field :weapon, disabled: !c.object.categories.include?('w') %></td>
-                <td><%= c.number_field :boardBreak, disabled: !c.object.categories.include?('b') %></td>
-                <td><%= c.number_field :sparring, disabled: !c.object.categories.include?('s') %></td>
-                <td><%= c.number_field :fit %></td>
-                <td><%= c.number_field :total, disabled: true %></td>
+            <%= f.fields_for :participants do |c, index| %>
+              <tr id="student-<%= c.index %>">
+                <td class="twenty">
+                  <%= c.text_field :firstName, disabled: true %>
+                </td>
+                <td>
+                  <%= c.number_field :form, value: 2, disabled: !c.object.categories.include?('f') %>
+                </td>
+                <td>
+                  <%= c.number_field :weapon, disabled: !c.object.categories.include?('w') %>
+                </td>
+                <td>
+                  <%= c.number_field :boardBreak, disabled: !c.object.categories.include?('b') %>
+                </td>
+                <td>
+                  <%= c.number_field :sparring, disabled: !c.object.categories.include?('s') %>
+                </td>
+                <td>
+                  <%= c.number_field :fit %>
+                </td>
+                <td>
+                  <%= c.number_field :total, :class => "total", disabled: true %>
+                </td>
               </tr>
               <%= c.hidden_field :student_id%>
+              <script>
+                var row = document.getElementById("student-<%= c.index %>").childNodes;
+                var score = 0
+                var total;
+                row.forEach(x => {
+                  if(x.childNodes.length) {
+                    x.childNodes.forEach(a => {
+                      if(a.type === 'number' && !a.disabled && a.value && a.className != 'total') {
+                        score = score + parseInt(a.value);
+                      }
+                      if(a.className === 'total')
+                        total = a;
+
+                      a.addEventListener('input', function(e) {
+                        var previous = score;
+                        if(e.data) {
+                          total.value = score + parseInt(e.data);
+                        } else {
+                          if(e.data)
+                            score = score + parseInt(e.data);
+                          total.value = previous;
+                          }
+                      })
+                    })
+                  }
+                  if(total)
+                    total.value = score
+                })
+              </script>
             <% end %>
         </tbody>
       </table>
