@@ -21,19 +21,19 @@
                   <%= c.text_field :firstName, disabled: true %>
                 </td>
                 <td>
-                  <%= c.number_field :form, value: 2, disabled: !c.object.categories.include?('f') %>
+                  <%= c.number_field :form, value: 2, :class => "formValue", disabled: !c.object.categories.include?('f') %>
                 </td>
                 <td>
-                  <%= c.number_field :weapon, disabled: !c.object.categories.include?('w') %>
+                  <%= c.number_field :weapon, value: 3, :class => "weaponValue", disabled: !c.object.categories.include?('w') %>
                 </td>
                 <td>
-                  <%= c.number_field :boardBreak, disabled: !c.object.categories.include?('b') %>
+                  <%= c.number_field :boardBreak, :class => "boardBreakValue", disabled: !c.object.categories.include?('b') %>
                 </td>
                 <td>
-                  <%= c.number_field :sparring, disabled: !c.object.categories.include?('s') %>
+                  <%= c.number_field :sparring, :class => "sparringValue", disabled: !c.object.categories.include?('s') %>
                 </td>
                 <td>
-                  <%= c.number_field :fit %>
+                  <%= c.number_field :fit, :class => "fitValue" %>
                 </td>
                 <td>
                   <%= c.number_field :total, :class => "total", disabled: true %>
@@ -41,33 +41,56 @@
               </tr>
               <%= c.hidden_field :student_id%>
               <script>
-                var row = document.getElementById("student-<%= c.index %>").childNodes;
-                var score = 0
-                var total;
-                row.forEach(x => {
-                  if(x.childNodes.length) {
-                    x.childNodes.forEach(a => {
-                      if(a.type === 'number' && !a.disabled && a.value && a.className != 'total') {
-                        score = score + parseInt(a.value);
-                      }
-                      if(a.className === 'total')
-                        total = a;
+                var row = document.getElementById("student-<%= c.index %>");
 
-                      a.addEventListener('input', function(e) {
-                        var previous = score;
-                        if(e.data) {
-                          total.value = score + parseInt(e.data);
-                        } else {
-                          if(e.data)
-                            score = score + parseInt(e.data);
-                          total.value = previous;
-                          }
-                      })
-                    })
-                  }
-                  if(total)
-                    total.value = score
-                })
+                var scores = [parseInt(row.querySelector(".formValue").value) || 0, 
+                              parseInt(row.querySelector(".weaponValue").value) || 0, 
+                              parseInt(row.querySelector(".boardBreakValue").value) || 0, 
+                              parseInt(row.querySelector(".sparringValue").value) || 0,  
+                              parseInt(row.querySelector(".fitValue").value) || 0];
+                var total = row.querySelector(".total");
+                total.value = scores.reduce((a,b) => a + b, 0 );
+
+                // function calculateTotal(value, total) {
+                //   console.log(`value: ${value}, total: ${total}`)
+                //   if(value)
+                //     return total += value
+                // }
+
+                // function setValues(row) {
+                //   row.forEach(x => {
+                //     var total;
+                //     if(x.childNodes && x.childNodes.length) {
+                //       var list = Array.from(x.childNodes);
+                //       if(list && list.length) {
+                //         var test = list.find(x => x.className == 'total')
+                //         if(test)
+                //           total = test.value
+                //       }
+                //     }
+                //     console.log(total)
+                //   })
+                // }
+                // var score = 0;
+                // setValues(row)
+
+                // row.forEach(x => {
+                //   if(x.childNodes.length) {
+                //       a.addEventListener('input', function(e) {
+                //         total.value = calculateTotal(e.data, total.value)
+                //         var previous = score;
+                //         if(e.data) {
+                //           total.value = score + parseInt(e.data);
+                //         } else {
+                //           if(e.data)
+                //             score = score + parseInt(e.data);
+                //           total.value = previous;
+                //           }
+                //       })
+                //     }
+                //     if(total)
+                //       total.value = score
+                // })
               </script>
             <% end %>
         </tbody>
