@@ -21,76 +21,49 @@
                   <%= c.text_field :firstName, disabled: true %>
                 </td>
                 <td>
-                  <%= c.number_field :form, value: 2, :class => "formValue", disabled: !c.object.categories.include?('f') %>
+                  <%= c.number_field :form, value: 2, class: "formValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('f') %>
                 </td>
                 <td>
-                  <%= c.number_field :weapon, value: 3, :class => "weaponValue", disabled: !c.object.categories.include?('w') %>
+                  <%= c.number_field :weapon, value: 3, class: "weaponValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('w') %>
                 </td>
                 <td>
-                  <%= c.number_field :boardBreak, :class => "boardBreakValue", disabled: !c.object.categories.include?('b') %>
+                  <%= c.number_field :boardBreak, class: "boardBreakValue-#{c.index} scores-#{c.index}", disabled: !c.object.categories.include?('b') %>
                 </td>
                 <td>
-                  <%= c.number_field :sparring, :class => "sparringValue", disabled: !c.object.categories.include?('s') %>
+                  <%= c.number_field :sparring, class: "sparringValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('s') %>
                 </td>
                 <td>
-                  <%= c.number_field :fit, :class => "fitValue" %>
+                  <%= c.number_field :fit, class: "fitValue-#{c.index} scores-#{c.index}" %>
                 </td>
                 <td>
-                  <%= c.number_field :total, :class => "total", disabled: true %>
+                  <%= c.number_field :total, :class => "total-#{c.index}", disabled: true %>
                 </td>
               </tr>
               <%= c.hidden_field :student_id%>
               <script>
+              function findTotal<%= c.index %>(){
+                  var array = document.querySelectorAll('.scores-<%= c.index %>');
+                  var total = 0;
+                  for(var i=0; i < array.length; i++) {
+                      if(parseInt(array[i].value))
+                          total += parseInt(array[i].value);
+                  }
+                  document.querySelector(".total-<%= c.index %>").value = total;
+                }
                 var row = document.getElementById("student-<%= c.index %>");
-
-                var scores = [parseInt(row.querySelector(".formValue").value) || 0, 
-                              parseInt(row.querySelector(".weaponValue").value) || 0, 
-                              parseInt(row.querySelector(".boardBreakValue").value) || 0, 
-                              parseInt(row.querySelector(".sparringValue").value) || 0,  
-                              parseInt(row.querySelector(".fitValue").value) || 0];
-                var total = row.querySelector(".total");
-                total.value = scores.reduce((a,b) => a + b, 0 );
-
-                // function calculateTotal(value, total) {
-                //   console.log(`value: ${value}, total: ${total}`)
-                //   if(value)
-                //     return total += value
-                // }
-
-                // function setValues(row) {
-                //   row.forEach(x => {
-                //     var total;
-                //     if(x.childNodes && x.childNodes.length) {
-                //       var list = Array.from(x.childNodes);
-                //       if(list && list.length) {
-                //         var test = list.find(x => x.className == 'total')
-                //         if(test)
-                //           total = test.value
-                //       }
-                //     }
-                //     console.log(total)
-                //   })
-                // }
-                // var score = 0;
-                // setValues(row)
-
-                // row.forEach(x => {
-                //   if(x.childNodes.length) {
-                //       a.addEventListener('input', function(e) {
-                //         total.value = calculateTotal(e.data, total.value)
-                //         var previous = score;
-                //         if(e.data) {
-                //           total.value = score + parseInt(e.data);
-                //         } else {
-                //           if(e.data)
-                //             score = score + parseInt(e.data);
-                //           total.value = previous;
-                //           }
-                //       })
-                //     }
-                //     if(total)
-                //       total.value = score
-                // })
+                var scores = [
+                                row.querySelector(".formValue-<%= c.index %>"), 
+                                row.querySelector(".weaponValue-<%= c.index %>"), 
+                                row.querySelector(".boardBreakValue-<%= c.index %>"), 
+                                row.querySelector(".sparringValue-<%= c.index %>"),
+                                row.querySelector(".fitValue-<%= c.index %>")
+                              ];
+                findTotal<%= c.index %>()
+                for(var i = 0; i < scores.length; i++) {
+                  scores[i].addEventListener('keydown', function(e) {
+                    findTotal<%= c.index %>();
+                  })
+                }
               </script>
             <% end %>
         </tbody>
