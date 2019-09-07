@@ -21,10 +21,10 @@
                   <%= c.text_field :firstName, disabled: true %>
                 </td>
                 <td>
-                  <%= c.number_field :form, value: 2, class: "formValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('f') %>
+                  <%= c.number_field :form, class: "formValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('f') %>
                 </td>
                 <td>
-                  <%= c.number_field :weapon, value: 3, class: "weaponValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('w') %>
+                  <%= c.number_field :weapon, class: "weaponValue-#{c.index} scores-#{c.index}",  disabled: !c.object.categories.include?('w') %>
                 </td>
                 <td>
                   <%= c.number_field :boardBreak, class: "boardBreakValue-#{c.index} scores-#{c.index}", disabled: !c.object.categories.include?('b') %>
@@ -60,7 +60,7 @@
                               ];
                 findTotal<%= c.index %>()
                 for(var i = 0; i < scores.length; i++) {
-                  scores[i].addEventListener('keydown', function(e) {
+                  scores[i].addEventListener('change', function(e) {
                     findTotal<%= c.index %>();
                   })
                 }
