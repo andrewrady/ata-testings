@@ -36,10 +36,10 @@
                   <%= c.number_field :fit, class: "fitValue-#{c.index} scores-#{c.index}" %>
                 </td>
                 <td>
-                  <%= c.number_field :total, :class => "total-#{c.index}", disabled: true %>
+                  <%= c.number_field :total, :class => "total-#{c.index}", readonly: true %>
                 </td>
               </tr>
-              <%= c.hidden_field :student_id%>
+              <%= c.hidden_field :student_id %>
               <script>
               function findTotal<%= c.index %>(){
                   var array = document.querySelectorAll('.scores-<%= c.index %>');
