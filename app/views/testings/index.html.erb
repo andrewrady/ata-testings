@@ -7,9 +7,7 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Status</th>
-      <th scope="col">Show</th>
-      <th scope="col">Edit</th>
-      <th scope="col"8>Delete</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
 
@@ -17,10 +15,20 @@
     <% @testings.each do |testing| %>
       <tr>
         <td scope="col"><%= testing.date.strftime("%m/%d/%Y") %></td>
-        <td><%= testing.status ? "Active" : "Inactive" %></td>
-        <td><%= link_to 'Show', testing %></td>
-        <td><%= link_to 'Edit', edit_testing_path(testing) %></td>
-        <td><%= link_to 'Delete', testing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= testing.status ? "Active" : "Completed " %></td>
+        <td>
+          <%= link_to testing_path(testing), title: 'Process' do %>
+            <i class="fas fa-sliders-h"></i>
+          <% end %>
+          <% if testing.status %>
+            <%= link_to edit_testing_path(testing), title: 'Edit' do %>
+              <i class="far fa-edit"></i>
+            <% end %>
+            <%= link_to testing_path(testing), method: :delete,  title: 'Delete' do %>
+              <i class="far fa-trash-alt"></i>
+            <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

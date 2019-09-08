@@ -2,7 +2,7 @@
 <h2><%= @testing.date.strftime("%m/%d/%Y") %></h2>
 <p id="notice"><%= notice %></p>
 
-<% if @student.length > 0 %>
+<% if @student.length > 0 && @testing.status %>
   <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
 
     <div class="form-group">
@@ -40,38 +40,36 @@
 
   <% end %>
 <% end %>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Rank</th>
-      <th>Tested</th>
-      <% if @testing.status != false %>
-        <th>Remove</th>
+<% if @testing.participants.length > 1 %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Rank</th>
+        <th>Tested</th>
+        <% if @testing.status != false %>
+          <th>Remove</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @testing.participants.each do |participant| %>
+        <tr>
+          <td><%= participant.firstName %> <%= participant.lastName %></td>
+          <td><%= participant.rank ? participant.rank : "NA" %></td>
+          <td><%= participant.total ? "Yes" : "No" %></td>
+          <% if @testing.status != false %>
+            <td>
+              <%= link_to 'Remove', [participant.testing, participant], method: :delete,:class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
+            </td>
+          <% end %>
+      </tr>
       <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @testing.participants.each do |participant| %>
-    <tr>
-      <td><%= participant.firstName %> <%= participant.lastName %></td>
-      <td><%= participant.rank ? participant.rank : "NA" %></td>
-      <td><%= participant.total ? "Yes" : "No" %></td>
-      <% if @testing.status != false %>
-        <td>
-          <%= link_to 'Remove', [participant.testing, participant], method: :delete,:class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
-        </td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-<%= link_to 'Edit', edit_testing_path(@testing), class: "btn btn-primary" %> 
-<% if @testing.status === true %>
-  <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
-<% else %>
-  <%= link_to 'View', testing_scores_path(@testing), class: "btn btn-info" %>
+    </tbody>
+  </table>
+  <% if @testing.status === true %>
+    <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
+  <% else %>
+    <%= link_to 'View', testing_scores_path(@testing), class: "btn btn-info" %>
+  <% end %>
 <% end %>

@@ -88,12 +88,48 @@
           <% @testing.participants.each do |c| %>
             <tr>
               <td><%= c.firstName %></td>
-              <td><%= c.form %></td>
-              <td><%= c.weapon %></td>
-              <td><%= c.boardBreak %></td>
-              <td><%= c.sparring %></td>
-              <td><%= c.fit %></td>
-              <td><%= c.total %></td>
+              <td>
+                <% if c.form %> 
+                  <%= c.form %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
+              <td>
+                <% if c.weapon %> 
+                  <%= c.weapon %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
+              <td>
+                <% if c.boardBreak %>
+                  <%= c.boardBreak %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
+              <td>
+                <% if c.sparring %>
+                  <%= c.sparring %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
+              <td>
+                <% if c.fit %>
+                  <%= c.fit %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
+              <td>
+                <% if c.total %>
+                  <%= c.total %>
+                <% else %>
+                  <i class="fas fa-ban"></i>
+                <% end %>
+              </td>
             </tr>
           <% end %>
       </tbody>
