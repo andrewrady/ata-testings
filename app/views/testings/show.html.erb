@@ -29,8 +29,7 @@
     </div>
 
     <script>
-      var name = document.getElementById('name')
-      document.addEventListener('input', function(event) {
+      document.querySelector('#name').addEventListener('input', function(event) {
         var name = event.target.options[event.target.selectedIndex].text;
         var test = name.split(' ');
         document.getElementById('firstName').value = test[0];
