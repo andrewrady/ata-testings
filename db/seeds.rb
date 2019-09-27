@@ -23,6 +23,7 @@ end
   status = true
   location = "Boise"
   date = Faker::Date.forward(days: 14) 
-  
-  Testing.create(status: status, location: location, date: date)
+  user_id = User.first.id
+
+  Testing.create(status: status, location: location, date: date, user_id: user_id)
 end
