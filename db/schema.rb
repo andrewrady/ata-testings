@@ -12,6 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20190927193459) do
 
+  create_table "groups", force: :cascade do |t|
+    t.string "title"
+    t.integer "testings_id"
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["testings_id"], name: "index_groups_on_testings_id"
+  end
+
   create_table "participants", force: :cascade do |t|
     t.integer "testing_id"
     t.integer "student_id"

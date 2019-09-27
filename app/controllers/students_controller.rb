@@ -6,7 +6,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params[:id]).where(:user_id => current_user)
+    @student = Student.where(:id => params[:id]).where(:user_id => current_user)
   end
 
   def new
@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new(student_params)
-    @student.user_id = current_user
+    @student.user_id = current_user.id
 
     if @student.save
       redirect_to @student
