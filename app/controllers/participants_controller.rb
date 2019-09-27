@@ -1,4 +1,5 @@
 class ParticipantsController < ApplicationController
+  before_action :authenticate_user!
 
   def create 
     @testing = Testing.find(params[:testing_id])

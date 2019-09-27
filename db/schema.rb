@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190813124410) do
-
-  create_table "groups", force: :cascade do |t|
-    t.string "title"
-    t.integer "testings_id"
-    t.datetime "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["testings_id"], name: "index_groups_on_testings_id"
-  end
+ActiveRecord::Schema.define(version: 20190927181341) do
 
   create_table "participants", force: :cascade do |t|
     t.integer "testing_id"
@@ -47,6 +38,8 @@ ActiveRecord::Schema.define(version: 20190813124410) do
     t.integer "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_students_on_user_id"
   end
 
   create_table "testings", force: :cascade do |t|
