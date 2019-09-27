@@ -19,6 +19,8 @@ class TestingsController < ApplicationController
 
   def create
     @testing = Testing.new(testing_params)
+    @testing.user_id = current_user.id
+
 
     if @testing.save
       redirect_to @testing
