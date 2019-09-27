@@ -14,7 +14,7 @@ User.create([{ email: 'test1@gmail.com', password: 'passowrd'}, { email: 'test2@
   last_name = Faker::Name.last_name
   rank = "White"
   size = 4
-  user_id = User.first.id
+  user_id = User.shuffle.last.id
 
   Student.create(firstName: first_name, lastName: last_name, rank: rank, size: size, user_id: user_id)
 end
