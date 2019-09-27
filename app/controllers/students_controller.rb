@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @students = current_user.Student.all
+    @students = Student.all.where(:user_id => current_user)
   end
 
   def show
