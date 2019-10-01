@@ -8,12 +8,10 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.where(:id => params[:id]).where(:user_id => current_user.id)
-    @ranks = ["White", "Orange", "Yellow", "Camo", "Green", "Purple", "Blue", "Brown Rec", "Brown Dec", "Red Rec", "Red Dec", "Rec Black Belt", "1st Degree", "2nd Degree", "3rd Degree"]
   end
 
   def new
     @student = Student.new
-    @ranks = ["White", "Orange", "Yellow", "Camo", "Green", "Purple", "Blue", "Brown Rec", "Brown Dec", "Red Rec", "Red Dec", "Rec Black Belt", "1st Degree", "2nd Degree", "3rd Degree"]
   end
 
   def create
@@ -39,7 +37,6 @@ class StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])    
-    @ranks = ["White", "Orange", "Yellow", "Camo", "Green", "Purple", "Blue", "Brown Rec", "Brown Dec", "Red Rec", "Red Dec", "Rec Black Belt", "1st Degree", "2nd Degree", "3rd Degree"]
   end
 
   def destroy
