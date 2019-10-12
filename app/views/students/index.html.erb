@@ -1,13 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Students</h1>
+<div class="d-flex flex-row mb-3">
+  <div class="justify-content-start">
+    <h1>Students</h1>
+  </div>
+  <div class="align-self-center ml-auto">
+    <%= link_to 'New Student', new_student_path, :class => "btn btn-primary" %>
+  </div>
+</div>
 
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Name</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
+      <th scope="col">Rank</th>
+      <th scope="col">Size</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
 
@@ -15,8 +23,16 @@
     <% @students.each do |student| %>
       <tr>
         <td scope="col"><%= student.firstName %> <%= student.lastName %></td>
-        <td><%= link_to 'Edit', edit_student_path(student), class: 'btn btn-primary' %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= student.rank %></td>
+        <td><%= student.size %></td>
+        <td>
+          <%= link_to edit_student_path(student), title: 'edit student' do %>
+            <i class="far fa-edit"></i>
+          <% end %>
+          <%= link_to student_path(student), method: :delete, title: 'delete student' do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +40,3 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path, :class => "btn btn-primary" %>
