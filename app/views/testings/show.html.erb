@@ -1,17 +1,45 @@
-<h1>Statis: <%= @testing.status ? "Active" : "Inactive" %></h1>
-<h2><%= @testing.date.strftime("%m/%d/%Y") %></h2>
+<div class="d-flex flex-row mb-3 mt-3">
+  <div class="justify-content-start">
+    <h1><%= @testing.date.strftime("%m/%d/%Y") %></h1>
+  </div>
+  <div class="align-self-center ml-auto">
+    <button class="btn btn-primary add-student">
+      Add Student
+    </button>
+    <% if @testing.status === true %>
+      <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
+    <% else %>
+      <%= link_to 'View', testing_scores_path(@testing), class: "btn btn-info" %>
+    <% end %>
+  </div>
+</div>
+
 <p id="notice"><%= notice %></p>
 
 <% if @student.length > 0 && @testing.status %>
-  <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
-
-    <div class="form-group">
-      <div class="form-row">
-        <div class="col">
-          <%= form.label :student_id %>
-          <%= form.select(:student_id, options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), {}, :id => "name", :class => "form-control") %>
+  <div id="add-student-container" class="d-none">
+    <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <%= form.label :student_id %>
+            <%= form.select(:student_id, 
+                options_for_select(@student.map {|student| [ student.firstName + " " + student.lastName, student.id]}), 
+                  {}, :id => "name", :class => "form-control") %>
+          </div>
+          <div class="col d-flex align-items-end">
+            <div class="form-group mb-0">
+              <%= form.submit 'Submit', class: 'btn btn-primary' %>
+              <button class="btn btn-info" id="customize-categories">
+                Customize
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="col">
+      </div>
+      <div class="form-row">
+        <div class="col d-none" id="categories">
+          <h4>Categories</h4>
           <%= form.collection_check_boxes(:categories, {'Form': 'f', 'Sparring': 's', 'Weapons': 'w', 'Board Breaks': 'b'}, :last, :first) do |b| %>
             <div class="form-check form-check-inline">
               <%= b.check_box class: 'form-check-input' %>
@@ -20,24 +48,18 @@
           <% end %>
         </div>
       </div>
-    </div>
-
-    <%= form.hidden_field :firstName, value: @firstStudent.firstName, :id => "firstName" %>
-    <%= form.hidden_field :lastName, value: @firstStudent.lastName, :id => "lastName" %>
-    <div class="form-group">
-      <%= form.submit 'Submit', class: 'btn btn-primary' %>
-    </div>
-
-    <script>
-      document.querySelector('#name').addEventListener('input', function(event) {
-        var name = event.target.options[event.target.selectedIndex].text;
-        var test = name.split(' ');
-        document.getElementById('firstName').value = test[0];
-        document.getElementById('lastName').value = test[1];
-      })
-    </script>
-
-  <% end %>
+      <%= form.hidden_field :firstName, value: @firstStudent.firstName, :id => "firstName" %>
+      <%= form.hidden_field :lastName, value: @firstStudent.lastName, :id => "lastName" %>
+      <script>
+        document.querySelector('#name').addEventListener('input', function(event) {
+          var name = event.target.options[event.target.selectedIndex].text;
+          var test = name.split(' ');
+          document.getElementById('firstName').value = test[0];
+          document.getElementById('lastName').value = test[1];
+        })
+      </script>
+    <% end %>
+  </div>
 <% end %>
 <% if @testing.participants.length > 1 %>
   <table class="table table-striped">
@@ -62,13 +84,8 @@
               <%= link_to 'Remove', [participant.testing, participant], method: :delete,:class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
             </td>
           <% end %>
-      </tr>
+        </tr>
       <% end %>
     </tbody>
   </table>
-  <% if @testing.status === true %>
-    <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
-  <% else %>
-    <%= link_to 'View', testing_scores_path(@testing), class: "btn btn-info" %>
-  <% end %>
 <% end %>

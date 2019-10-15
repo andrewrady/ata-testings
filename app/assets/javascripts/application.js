@@ -13,3 +13,26 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+document.addEventListener('DOMContentLoaded', function () {
+  
+  document.querySelector('.add-student').addEventListener('click', function(e) {
+    var text = this.innerHTML.trim()
+    this.innerHTML = text == 'Add Student' ? 'Remove' : 'Add Student';
+    this.classList.toggle('btn-primary');
+    this.classList.toggle('btn-danger')
+    document.getElementById('add-student-container').classList.toggle('d-none');
+  })
+
+  document.getElementById('customize-categories').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('categories').classList.toggle('d-none');
+  })
+
+  var categories = document.querySelectorAll('.form-check');
+  for(var i = 0; i < categories.length; i++) {
+    var checkbox = categories[i].firstChild.nextSibling;
+    if(checkbox.value == 'f' || checkbox.value == 's' || checkbox.value == 'b')
+      checkbox.checked = true;
+  }
+});
