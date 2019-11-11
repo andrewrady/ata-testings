@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :testings do
     get "/scores", :to => "testings#score"
     post "/scores", :to => "testings#processing"
+    get "/reports", :to => "testings#report"
     resources :participants
   end
 

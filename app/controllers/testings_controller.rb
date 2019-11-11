@@ -75,6 +75,41 @@ class TestingsController < ApplicationController
     end
   end
 
+  def report
+    @testing = Testing.find(params[:testing_id])
+    @ranks = Constants::Ranks
+    @availableSize = [0, 1, 2, 3, 4, 5, 6, 7,8 ,9]
+    @currentRankList = Hash.new
+    @ranks.each do |rank| 
+      @availableSize.each do |size|
+        @test = @testing.participants.where(:rank => rank, :size => size)
+        if(@test.length === 1)
+          if(@currentRankList.has_key? rank)
+            @currentRankList[rank].each do |s| 
+              if(s[:size] != @test[0][:size])
+                @currentRankList[rank].push({:size => @test.pluck(:size)[0], :total => 1})
+              end
+            end
+          else
+            @currentRankList[rank] = [{:size => @test.pluck(:size)[0], :total => 1}]
+          end
+        elsif(@test.length > 1)
+          @currentRankList[rank] = [{:size => @test.pluck(:size)[0], :total => @test.length}]
+        end
+      end
+    end
+    @nextRank = Hash.new
+    @currentRankList.each do |key, value| 
+      @placement = @ranks.find_index(key)
+      @placement += 1
+      
+      @updateRank = @ranks[@placement]
+      @nextRank.store(@updateRank, value)
+    end
+    raise @nextRank.inspect
+    
+  end
+
   private
     def testing_params
       params.require(:testing).permit(:status, :location, :date, :student_id, :form, :sparring, :boardBreaks, :fit,
