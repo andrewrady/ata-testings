@@ -16,7 +16,7 @@
 //= require_tree .
 
 window.addEventListener('load', function () {
-  
+
   var reportTabs = this.document.querySelector('.reports-tabs')
   for(i=0; i < reportTabs.children.length; i++) {
     reportTabs.children[i].addEventListener('click', function(e) {
@@ -25,6 +25,13 @@ window.addEventListener('load', function () {
       toggleReportsContainer(this.children[0].getAttribute('href').toLowerCase().substr(1))
     })
   }
+
+  this.document.querySelector('.print-reports').addEventListener('click', function() {
+    var nextTab = reportTabs.children[1]
+    toggleActiveTab(nextTab)
+    toggleReportsContainer('next')
+    window.print()
+  })
 
   function toggleActiveTab(tab) {
     for(var sibling of tab.parentNode.children) {

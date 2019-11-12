@@ -17,13 +17,13 @@
         <td scope="col"><%= testing.date.strftime("%m/%d/%Y") %></td>
         <td><%= testing.status ? "Active" : "Completed " %></td>
         <td>
-          <%= link_to testing_reports_path(testing), title: 'Belt order' do %>
-            <i class="fas fa-clipboard-list"></i>
-          <% end %>
           <%= link_to testing_path(testing), title: 'Process' do %>
             <i class="fas fa-sliders-h"></i>
           <% end %>
           <% if testing.status %>
+            <%= link_to testing_reports_path(testing), title: 'Belt order' do %>
+              <i class="fas fa-clipboard-list"></i>
+            <% end %>
             <%= link_to edit_testing_path(testing), title: 'Edit' do %>
               <i class="far fa-edit"></i>
             <% end %>
