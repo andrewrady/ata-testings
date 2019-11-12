@@ -106,7 +106,6 @@ class TestingsController < ApplicationController
       @updateRank = @ranks[@placement]
       @nextRank.store(@updateRank, value)
     end
-    raise @nextRank.inspect
     
   end
 

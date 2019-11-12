@@ -1,0 +1,90 @@
+<div class="row justify-content-between align-items-center">
+  <div class="col-5">
+    <h1>Rank Order Report</h1>
+  </div>
+  <div class="col-4">
+    <button type="button" class="btn btn-primary">
+      Print 
+    </button>
+  </div>
+</div>
+<ul class="nav nav-tabs reports-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#current">Current</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#next">Next</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#break-down">Break Down</a>
+  </li>
+</ul>
+<div class="tab-content reports-container">
+  <div class="tab-pane fade show active" id="current" role="tabpanel">
+    <br>
+    <% @currentRankList.each do |key, value| %>
+      <h3><%= key %> Belts</h3>
+      <table class="table table-striped my-4">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tbody>
+          <% value.each do |content| %>
+            <tr>
+              <td><%= content[:size] %></td>
+              <td><%= content[:total] %></td>
+            </tr>
+          <% end %> 
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="next" role="tabpanel">
+    <br>
+    <% @nextRank.each do |key, value| %>
+      <h3><%= key %> belts</h3>
+      <table class="table table-striped my-4">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% value.each do |content| %>
+            <tr>
+              <td><%= content[:size] %></td>
+              <td><%= content[:total] %></td>
+            </tr>
+          <% end %> 
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="break-down">
+    <table class="table table-striped my-4">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Current Rank</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @testing.participants.each do |participant| %>
+          <tr>
+            <td><%= participant.firstName %> <%= participant.lastName %></td>
+            <td><%= participant.rank ? participant.rank : "NA" %></td>
+            <td><%= participant.size %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
