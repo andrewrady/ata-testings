@@ -16,7 +16,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<% if @student.length > 0 && @testing.status %>
+<% if @student.length > 0 && @testing.status == true %>
   <div id="add-student-container" class="d-none">
     <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
       <div class="form-group">

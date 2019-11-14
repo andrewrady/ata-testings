@@ -17,18 +17,26 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   
-  document.querySelector('.add-student').addEventListener('click', function(e) {
-    var text = this.innerHTML.trim()
-    this.innerHTML = text == 'Add Student' ? 'Remove' : 'Add Student';
-    this.classList.toggle('btn-primary');
-    this.classList.toggle('btn-danger')
-    document.getElementById('add-student-container').classList.toggle('d-none');
-  })
+  var addStudent = document.querySelector('.add-student')  
+  
+  if(addStudent) {
+    addStudent.addEventListener('click', function(e) {
+      var text = this.innerHTML.trim()
+      this.innerHTML = text == 'Add Student' ? 'Remove' : 'Add Student';
+      this.classList.toggle('btn-primary');
+      this.classList.toggle('btn-danger')
+      document.getElementById('add-student-container').classList.toggle('d-none');
+    })
+  }
 
-  document.getElementById('customize-categories').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.getElementById('categories').classList.toggle('d-none');
-  })
+  var customizeButton = document.getElementById('customize-categories')
+
+  if(customizeButton) {
+    customizeButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('categories').classList.toggle('d-none');
+    })
+  }
 
   var categories = document.querySelectorAll('.form-check');
   for(var i = 0; i < categories.length; i++) {
@@ -36,22 +44,27 @@ document.addEventListener('DOMContentLoaded', function () {
     if(checkbox.value == 'f' || checkbox.value == 's' || checkbox.value == 'b')
       checkbox.checked = true;
   }
-
-  var reportTabs = this.document.querySelector('.reports-tabs')
-  for(i=0; i < reportTabs.children.length; i++) {
-    reportTabs.children[i].addEventListener('click', function(e) {
-      e.preventDefault()
-      toggleActiveTab(this)
-      toggleReportsContainer(this.children[0].getAttribute('href').toLowerCase().substr(1))
-    })
+ 
+  var reportTabs = document.querySelector('.reports-tabs')
+  if(reportTabs) {
+    for(i=0; i < reportTabs.children.length; i++) {
+      reportTabs.children[i].addEventListener('click', function(e) {
+        e.preventDefault()
+        toggleActiveTab(this)
+        toggleReportsContainer(this.children[0].getAttribute('href').toLowerCase().substr(1))
+      })
+    }
   }
 
-  this.document.querySelector('.print-reports').addEventListener('click', function() {
-    var nextTab = reportTabs.children[1]
-    toggleActiveTab(nextTab)
-    toggleReportsContainer('next')
-    window.print()
-  })
+  var printButton = document.querySelector('.print-reports')
+  if(printButton) {
+    printButton.addEventListener('click', function() {
+      var nextTab = reportTabs.children[1]
+      toggleActiveTab(nextTab)
+      toggleReportsContainer('next')
+      window.print()
+    })
+  }
 
   function toggleActiveTab(tab) {
     for(var sibling of tab.parentNode.children) {
