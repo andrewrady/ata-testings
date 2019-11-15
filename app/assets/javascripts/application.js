@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbolinks:load', function () {
   
   var addStudent = document.querySelector('.add-student')  
   
