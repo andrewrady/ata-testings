@@ -92,7 +92,7 @@ class TestingsController < ApplicationController
               end
             end
           else
-            @currentRankList[rank].push({:size => @student.pluck(:size)[0], :total => @student.length})
+            @currentRankList[rank] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
           end
         elsif(@student.length > 1)
           if(@currentRankList.has_key? rank)
