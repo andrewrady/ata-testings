@@ -78,10 +78,10 @@ class TestingsController < ApplicationController
   def report
     @testing = Testing.find(params[:testing_id])
     @ranks = Constants::Ranks
-    @availableSize = [0, 1, 2, 3, 4, 5, 6, 7,8 ,9]
+    
     @currentRankList = Hash.new
     @ranks.each do |rank| 
-      @availableSize.each do |size|
+      Constants::AvailableSizes.each do |size|
         @test = @testing.participants.where(:rank => rank, :size => size)
         if(@test.length === 1)
           if(@currentRankList.has_key? rank)

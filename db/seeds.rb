@@ -12,8 +12,8 @@ User.create([{ email: 'test1@gmail.com', password: 'password'}, { email: 'test2@
 25.times do
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
-  rank = "White"
-  size = 4
+  rank = Constants::Ranks.sample
+  size = Constants::AvailableSizes.sample
   user_id = User.first.id
 
   Student.create(firstName: first_name, lastName: last_name, rank: rank, size: size, user_id: user_id)
