@@ -22,6 +22,6 @@ class ParticipantsController < ApplicationController
     def participants_param
       params.require(:participant).permit(:student_id, :firstName, :lastName,
                                           :testing_id, :form, :weapon, :sparring, 
-                                          :boardBreak, :fit, :total, categories: [])
+                                          :boardBreak, :fit, :total, :size, categories: [])
     end
 end

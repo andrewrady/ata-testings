@@ -78,23 +78,32 @@ class TestingsController < ApplicationController
   def report
     @testing = Testing.find(params[:testing_id])
     @ranks = Constants::Ranks
-    
     @currentRankList = Hash.new
     @ranks.each do |rank| 
       Constants::AvailableSizes.each do |size|
-        @test = @testing.participants.where(:rank => rank, :size => size)
-        if(@test.length === 1)
+        @student = @testing.participants.where(:rank => rank, :size => size)
+        if(@student.length === 1)
           if(@currentRankList.has_key? rank)
             @currentRankList[rank].each do |s| 
-              if(s[:size] != @test[0][:size])
-                @currentRankList[rank].push({:size => @test.pluck(:size)[0], :total => 1})
+              if(s[:size] != @student[0][:size])
+                @currentRankList[rank].push({:size => @student.pluck(:size)[0], :total => @student.length})
+                break
               end
             end
           else
-            @currentRankList[rank] = [{:size => @test.pluck(:size)[0], :total => 1}]
+            @currentRankList[rank] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
           end
-        elsif(@test.length > 1)
-          @currentRankList[rank] = [{:size => @test.pluck(:size)[0], :total => @test.length}]
+        elsif(@student.length > 1)
+          if(@currentRankList.has_key? rank)
+            @currentRankList[rank].each do |s| 
+              if(s[:size] != @student[0][:size])
+                @currentRankList[rank].push({:size => @student.pluck(:size)[0], :total => @student.length})
+                break
+              end
+            end
+          else
+            @currentRankList[rank] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
+          end
         end
       end
     end
