@@ -6,7 +6,8 @@
     <button class="btn btn-primary add-student">
       Add Student
     </button>
-    <% if @testing.status === true %>
+    <% if @testing.status === true && @testing.participants.length > 0 %>
+      <%= link_to 'Order Belts', testing_reports_path(@testing), class: 'btn btn-success' %>
       <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
     <% else %>
       <%= link_to 'View', testing_scores_path(@testing), class: "btn btn-info" %>
