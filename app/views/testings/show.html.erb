@@ -19,7 +19,7 @@
 
 <% if @student.length > 0 && @testing.status == true %>
   <div id="add-student-container" class="d-none">
-    <%= form_with(model: [@testing, @testing.participants.build], local: true) do |form| %>
+    <%= form_with(model: [@testing, @clone.build], local: true) do |form| %>
       <div class="form-group">
         <div class="form-row">
           <div class="col">
@@ -62,7 +62,7 @@
     <% end %>
   </div>
 <% end %>
-<% if @testing.participants.length > 1 %>
+<% if @testing.participants.length > 0 %>
   <table class="table table-striped">
     <thead>
       <tr>

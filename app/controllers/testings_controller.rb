@@ -7,10 +7,10 @@ class TestingsController < ApplicationController
 
   def show
     @testing = Testing.find(params[:id])
-    @currentStudents = @testing.participants.pluck :student_id
+    @clone = deep_copy(@testing.participants)
+    @currentStudents = @clone.pluck :student_id
     @student = Student.where.not(id: @currentStudents)
     @firstStudent = @student.first
-
   end
 
   def new
@@ -122,5 +122,9 @@ class TestingsController < ApplicationController
     def testing_params
       params.require(:testing).permit(:status, :location, :date, :student_id, :form, :sparring, :boardBreaks, :fit,
                                       participants_attributes: [:form, :sparring, :boardBreak, :fit, :total, :id, :weapon, :student_id])
+    end
+
+    def deep_copy(value)
+      Marshal.load(Marshal.dump(value))
     end
 end
