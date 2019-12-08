@@ -4,7 +4,10 @@ class ParticipantsController < ApplicationController
   def create 
     @testing = Testing.find(params[:testing_id])
     @student = Student.find(params[:participant][:student_id])
-    @participant = @testing.participants.create(participants_param.merge(:size => @student.size, :rank => @student.rank))
+    @participant = @testing.participants.create(participants_param.merge(:firstName => @student.firstName,
+                                                                        :lastName => @student.lastName,
+                                                                        :size => @student.size, 
+                                                                        :rank => @student.ranks.last.name))
 
     redirect_to testing_path(@testing)
   end
