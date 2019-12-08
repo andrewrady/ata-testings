@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191109184131) do
+ActiveRecord::Schema.define(version: 20191208174638) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "available_ranks", force: :cascade do |t|
+    t.string "name"
+    t.integer "order"
+    t.string "rankType"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string "title"
@@ -41,10 +52,19 @@ ActiveRecord::Schema.define(version: 20191109184131) do
     t.index ["testing_id"], name: "index_participants_on_testing_id"
   end
 
+  create_table "ranks", force: :cascade do |t|
+    t.string "name"
+    t.integer "order"
+    t.bigint "student_id"
+    t.string "rankType"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_ranks_on_student_id"
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "firstName"
     t.string "lastName"
-    t.string "rank"
     t.integer "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,4 +94,5 @@ ActiveRecord::Schema.define(version: 20191109184131) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "ranks", "students"
 end

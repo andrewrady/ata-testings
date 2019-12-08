@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem "pg", "~> 0.18"
 gem "nokogiri", ">= 1.10.4"
 gem 'faker'
 
@@ -45,8 +46,6 @@ group :development, :test do
 end
 
 group :development do
-  # Need to replace with local instance of postgres
-  gem 'sqlite3'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -56,7 +55,6 @@ group :development do
 end
 
 group :production do
-  gem "pg", "~> 0.18"
   gem 'rails_12factor'
 end
 
