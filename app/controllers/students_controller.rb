@@ -12,6 +12,7 @@ class StudentsController < ApplicationController
 
   def new
     @student = Student.new
+    @ranks = AvailableRank.all
   end
 
   def create

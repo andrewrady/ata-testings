@@ -78,7 +78,7 @@
       <% @testing.participants.each do |participant| %>
         <tr>
           <td><%= participant.firstName %> <%= participant.lastName %></td>
-          <td><%= participant.rank ? participant.rank : "NA" %></td>
+          <td><%= participant.ranks.length ? participant.ranks.last : "NA" %></td>
           <td><%= participant.total ? "Yes" : "No" %></td>
           <% if @testing.status != false %>
             <td>
