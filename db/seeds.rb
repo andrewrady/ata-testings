@@ -9,14 +9,8 @@ require 'faker'
 
 User.create([{ email: 'test1@gmail.com', password: 'password'}, { email: 'test2@gmail.com', password: 'password'}])
 
-25.times do
-  first_name = Faker::Name.first_name
-  last_name = Faker::Name.last_name
-  rank = Constants::Ranks.sample
-  size = Constants::AvailableSizes.sample
-  user_id = User.first.id
-
-  Student.create(firstName: first_name, lastName: last_name, rank: rank, size: size, user_id: user_id)
+Constants::Ranks.each_with_index do |rank, index|
+  AvailableRank.create(name: rank, order: index + 1, rankType: "standard")
 end
 
 1.times do
@@ -26,4 +20,15 @@ end
   user_id = User.first.id
 
   Testing.create(status: status, location: location, date: date, user_id: user_id)
+end
+
+25.times do
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+  size = Constants::AvailableSizes.sample
+  user_id = User.first.id
+  rank = AvailableRank.order("RANDOM()").first
+
+  Student.create(firstName: first_name, lastName: last_name, size: size, user_id: user_id)
+    .ranks.create!(name: rank.name, order: rank.order, rankType: rank.rankType)
 end

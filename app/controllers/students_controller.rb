@@ -8,10 +8,13 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.where(:id => params[:id]).where(:user_id => current_user.id)
+    @ranks = AvailableRank.all
+
   end
 
   def new
     @student = Student.new
+    @ranks = AvailableRank.all
   end
 
   def create
@@ -36,7 +39,9 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    @student = Student.find(params[:id])    
+    @student = Student.find(params[:id])
+    @ranks = AvailableRank.all
+
   end
 
   def destroy

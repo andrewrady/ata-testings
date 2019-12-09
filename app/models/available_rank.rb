@@ -1,0 +1,2 @@
+class AvailableRank < ApplicationRecord
+end

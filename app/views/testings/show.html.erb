@@ -49,16 +49,6 @@
           <% end %>
         </div>
       </div>
-      <%= form.hidden_field :firstName, value: @firstStudent.firstName, :id => "firstName" %>
-      <%= form.hidden_field :lastName, value: @firstStudent.lastName, :id => "lastName" %>
-      <script>
-        document.querySelector('#name').addEventListener('input', function(event) {
-          var name = event.target.options[event.target.selectedIndex].text;
-          var test = name.split(' ');
-          document.getElementById('firstName').value = test[0];
-          document.getElementById('lastName').value = test[1];
-        })
-      </script>
     <% end %>
   </div>
 <% end %>
@@ -78,7 +68,7 @@
       <% @testing.participants.each do |participant| %>
         <tr>
           <td><%= participant.firstName %> <%= participant.lastName %></td>
-          <td><%= participant.rank ? participant.rank : "NA" %></td>
+          <td><%= participant.rank   ? participant.rank : "NA" %></td>
           <td><%= participant.total ? "Yes" : "No" %></td>
           <% if @testing.status != false %>
             <td>
