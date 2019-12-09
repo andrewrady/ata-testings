@@ -77,43 +77,43 @@ class TestingsController < ApplicationController
 
   def report
     @testing = Testing.find(params[:testing_id])
-    @ranks = Constants::Ranks
+    @ranks = AvailableRank.all
     @currentRankList = Hash.new
     @ranks.each do |rank| 
       Constants::AvailableSizes.each do |size|
-        @student = @testing.participants.where(:rank => rank, :size => size)
+        @student = @testing.participants.where(:rank => rank.name, :size => size)
         if(@student.length === 1)
-          if(@currentRankList.has_key? rank)
+          if(@currentRankList.has_key? rank.name)
             @currentRankList[rank].each do |s| 
               if(s[:size] != @student[0][:size])
-                @currentRankList[rank].push({:size => @student.pluck(:size)[0], :total => @student.length})
+                @currentRankList[rank.name].push({:size => @student.pluck(:size)[0], :total => @student.length})
                 break
               end
             end
           else
-            @currentRankList[rank] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
+            @currentRankList[rank.name] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
           end
         elsif(@student.length > 1)
-          if(@currentRankList.has_key? rank)
-            @currentRankList[rank].each do |s| 
+          if(@currentRankList.has_key? rank.name)
+            @currentRankList[rank.name].each do |s| 
               if(s[:size] != @student[0][:size])
-                @currentRankList[rank].push({:size => @student.pluck(:size)[0], :total => @student.length})
+                @currentRankList[rank.name].push({:size => @student.pluck(:size)[0], :total => @student.length})
                 break
               end
             end
           else
-            @currentRankList[rank] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
+            @currentRankList[rank.name] = [{:size => @student.pluck(:size)[0], :total => @student.length}]
           end
         end
       end
     end
     @nextRank = Hash.new
     @currentRankList.each do |key, value| 
-      @placement = @ranks.find_index(key)
-      @placement += 1
-      
-      @updateRank = @ranks[@placement]
-      @nextRank.store(@updateRank, value)
+      @placement = @ranks.select{ |rank| rank.name == key }
+      @newOrder = @placement[0][:order] += 1
+
+      @newRank = @ranks.select{ |rank| rank.order == @newOrder}.last
+      @nextRank.store(@newRank, value)
     end
     
   end
