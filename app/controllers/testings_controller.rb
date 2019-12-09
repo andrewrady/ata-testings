@@ -56,16 +56,17 @@ class TestingsController < ApplicationController
 
   def processing
     @testing = Testing.find(params[:testing_id])
+    @ranks = AvailableRank.all
 
     if @testing.update(testing_params)
       params[:testing][:participants_attributes].each do |key, value|
         if !value["total"].empty? && value["total"].to_i >= 3
           @student = Student.find(value["student_id"])
-          @ranks = Constants::Ranks
-          @placement = @ranks.find_index(@student.rank)
-          @placement += 1
+          @placement = @ranks.select{ |rank| rank.name == @student.ranks.last.name }
+          @newOrder = @placement[0][:order] += 1
 
-          @student.rank = @ranks[@placement]
+          @newRank = @ranks.select{ |rank| rank.order == @newOrder}.last
+          @student.ranks.create!(name: @newRank.name, order: @newRank.order, rankType: @newRank.rankType)
           @student.save
         end
       end
@@ -82,10 +83,13 @@ class TestingsController < ApplicationController
     @ranks.each do |rank| 
       Constants::AvailableSizes.each do |size|
         @student = @testing.participants.where(:rank => rank.name, :size => size)
+        if(@student.length === 0 )
+          next
+        end
         if(@student.length === 1)
           if(@currentRankList.has_key? rank.name)
-            @currentRankList[rank].each do |s| 
-              if(s[:size] != @student[0][:size])
+            @currentRankList.each do |s,v| 
+              if(v[0][:size] != @student[0][:size])
                 @currentRankList[rank.name].push({:size => @student.pluck(:size)[0], :total => @student.length})
                 break
               end
@@ -95,8 +99,8 @@ class TestingsController < ApplicationController
           end
         elsif(@student.length > 1)
           if(@currentRankList.has_key? rank.name)
-            @currentRankList[rank.name].each do |s| 
-              if(s[:size] != @student[0][:size])
+            @currentRankList[rank.name].each do |s,v| 
+              if(v[0][:size] != @student[0][:size])
                 @currentRankList[rank.name].push({:size => @student.pluck(:size)[0], :total => @student.length})
                 break
               end
