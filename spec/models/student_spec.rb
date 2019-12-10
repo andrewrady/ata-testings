@@ -22,7 +22,7 @@ RSpec.describe Student, type: :model do
     end
 
     it 'saves successfully' do
-      expect(Student.create!(:firstName => 'First', :lastName => 'Last', :user_id => 1)).to be_valid
+      expect(Student.create!(:firstName => 'First', :lastName => 'Last', :user_id =>  User.first.id)).to be_valid
     end
   end
 end

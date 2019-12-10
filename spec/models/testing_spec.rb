@@ -22,16 +22,8 @@ RSpec.describe Testing, type: :model do
       expect(testing.errors[:date]).to include("can't be blank")
     end
 
-    it 'ensure status presence' do
-      testing = Testing.new
-      testing.location = 'Boise'
-      testing.date = '11/12/2019'
-      testing.valid?
-      expect(testing.errors[:status]).to include("can't be blank")
-    end
-
     it 'save successfully' do
-      expect(Testing.create!(:location => 'Boise', :date => '11/12/2019', :status => true, :user_id => 1)).to be_valid
+      expect(Testing.create!(:location => 'Boise', :date => '11/12/2019', :status => true, :user_id =>  User.first.id)).to be_valid
     end
   end
 end
