@@ -15,29 +15,15 @@
     <div class="form-group">
       <div class="form-row">  
         <div class="col">
+          <%= form.label :firstName %>
           <%= form.text_field :firstName, :class => "form-control", placeholder: 'First Name' %>
         </div>
         <div class="col">
+          <%= form.label :lastName %>
           <%= form.text_field :lastName, :class => "form-control", placeholder: 'Last Name' %>
         </div>
       </div>
     </div>
-
-    <div class="form-group">
-      <div class="form-row">
-        <div class="col">
-        <% if @student.ranks.length > 0%>
-          <%= form.select @student.ranks, options_for_select(@ranks.map{ |obj| [obj[:name]]}, @student.ranks.last.name), {}, :class => "form-control" %>
-        <% else %>
-          <%= form.select @student.ranks, options_for_select(@ranks.map{ |obj| [obj[:name]]}), {}, :class => "form-control" %>
-        <% end %>
-        </div>
-        <div class="col">
-          <%= form.number_field :size, :class => "form-control", placeholder: "Size" %>
-        </div>
-      </div>
-    </div>
-
     <%= form.submit 'Submit', :class => "btn btn-primary" %>
   </div>
 <% end %>

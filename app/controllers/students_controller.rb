@@ -7,9 +7,8 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @student = Student.where(:id => params[:id]).where(:user_id => current_user.id)
+    @student = Student.where(:id => params[:id]).where(:user_id => current_user.id).first
     @ranks = AvailableRank.all
-
   end
 
   def new
@@ -54,6 +53,7 @@ class StudentsController < ApplicationController
   private
 
     def student_params
-      params.require(:student).permit(:firstName, :lastName, :size, :rank)
+      params.require(:student).permit(:firstName, :lastName, :size)
     end
+
 end

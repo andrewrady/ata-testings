@@ -23,7 +23,13 @@
     <% @students.each do |student| %>
       <tr>
         <td scope="col"><%= student.firstName %> <%= student.lastName %></td>
-        <td><%= student.ranks.last.name %></td>
+        <td>
+          <% if student.ranks.length > 0 %>
+            <%= student.ranks.last.name %>
+          <% else %>
+            <i class="fas fa-ban"></i>
+          <% end %>
+        </td>
         <td><%= student.size %></td>
         <td>
           <%= link_to edit_student_path(student), title: 'edit student' do %>

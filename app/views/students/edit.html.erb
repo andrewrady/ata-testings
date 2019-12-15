@@ -1,3 +1,19 @@
-<h1>Editing Student</h1>
+<ul class="nav nav-tabs my-3">
+  <li class="nav-item" data-label="General">
+    <a class="nav-link active" href="#">General</a>
+  </li>
+  <li class="nav-item" data-label="Ranks">
+    <a class="nav-link" href="#">Ranks</a>
+  </li>
+</ul>
 
-<%= render 'form', student: @student %>
+<div class="tab-content">
+  <div class="tab-pane fade show active general">
+    <h1 class="py-2"><%= @student.firstName %> <%= @student.lastName %></h1>
+    <%= render 'form', student: @student %>
+  </div>
+  <div class="tab-pane fade show ranks" aria-labelledby="ranks">
+    <%>
+  </div>
+</div>
+

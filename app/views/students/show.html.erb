@@ -1,4 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">General</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Ranks</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" aria-labelledby="general">
+    <h1 class="px-2 py-3"><%= @student.firstName %> <%= @student.lastName %></h1>
+  </div>
+  <div class="tab-pane fade show" aria-labelledby="ranks">
+
+  </div>
+</div>
+
