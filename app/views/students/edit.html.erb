@@ -13,7 +13,45 @@
     <%= render 'form', student: @student %>
   </div>
   <div class="tab-pane fade show ranks" aria-labelledby="ranks">
-    <%>
+    <% if @student.ranks.length === 0 %>
+      <div class="d-flex justify-content-between">
+        <h1>No Ranks</h1>
+        <button class="btn btn-primary">Add Rank</button>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <%= form_for @student, :url => new_student_rank_path(@student) do |f| %>
+            <%= f.fields_for :rank do |r| %>
+              <div class="form-group">
+                <%= r.label :name %>
+                <%= r.select :name, @ranks.map { |rank| [rank.name, rank.order] }, {}, :class => 'form-control'%>
+              </div>
+              <% end %>
+            <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <h1>Ranks</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Type</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @student.ranks.each do |rank| %>
+            <tr>
+              <td><%= rank.name %></td>
+              <td><%= rank.rankType %></td>
+              <td><%= rank.created_at.strftime("%m/%d/%Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
 

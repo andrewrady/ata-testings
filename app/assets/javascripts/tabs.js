@@ -12,7 +12,7 @@ document.addEventListener('turbolinks:load', function () {
           link.classList.remove('active')
         })
         Array.from(tabContent.children).forEach(content => {
-          if(Array.from(content.classList).includes(x.dataset.label.toLowerCase())) {
+          if(x.dataset.label && Array.from(content.classList).includes(x.dataset.label.toLowerCase())) {
             content.classList.add('active')
           } else {
             content.classList.remove('active')
@@ -21,7 +21,5 @@ document.addEventListener('turbolinks:load', function () {
         x.children[0].classList.add('active')
       })
     })
-
-
   }
 });

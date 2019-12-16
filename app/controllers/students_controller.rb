@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
     @student.user_id = current_user.id
 
     if @student.save
-      redirect_to @student
+      redirect_to edit_student_path(@student)
     else
       render 'new'
     end
@@ -40,7 +40,6 @@ class StudentsController < ApplicationController
   def edit
     @student = Student.find(params[:id])
     @ranks = AvailableRank.all
-
   end
 
   def destroy
@@ -53,7 +52,7 @@ class StudentsController < ApplicationController
   private
 
     def student_params
-      params.require(:student).permit(:firstName, :lastName, :size)
+      params.require(:student).permit(:firstName, :lastName, :size, ranks_attributes: [:name, :order, :rankType])
     end
 
 end

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "testings#index"
-  resources :students
+  resources :students do
+    resources :ranks
+  end
   resources :testings do
     get "/scores", :to => "testings#score"
     post "/scores", :to => "testings#processing"
