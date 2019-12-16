@@ -15,13 +15,22 @@
     <div class="form-group">
       <div class="form-row">  
         <div class="col">
-          <%= form.label :firstName %>
+          <%= form.label :firstName, "First Name" %>
           <%= form.text_field :firstName, :class => "form-control", placeholder: 'First Name' %>
         </div>
         <div class="col">
-          <%= form.label :lastName %>
+          <%= form.label :lastName, "Last Name" %>
           <%= form.text_field :lastName, :class => "form-control", placeholder: 'Last Name' %>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-row">  
+        <div class="col">
+          <%= form.label :size, "Size" %>
+          <%= form.number_field :size, :class => "form-control", placeholder: "size" %>
+        </div>
+        <div class="col"></div>
       </div>
     </div>
     <%= form.submit 'Submit', :class => "btn btn-primary" %>
