@@ -3,9 +3,11 @@
     <h1><%= @testing.date.strftime("%m/%d/%Y") %></h1>
   </div>
   <div class="align-self-center ml-auto">
-    <button class="btn btn-primary add-student">
-      Add Student
-    </button>
+    <% if @testing.status === true %>
+      <button class="btn btn-primary add-student">
+        Add Student
+      </button>
+    <% end %>
     <% if @testing.status === true && @testing.participants.length > 0 %>
       <%= link_to 'Order Belts', testing_reports_path(@testing), class: 'btn btn-success' %>
       <%= link_to 'Process', testing_scores_path(@testing), class: "btn btn-info" %>
@@ -58,8 +60,10 @@
       <tr>
         <th>Name</th>
         <th>Rank</th>
-        <th>Tested</th>
-        <% if @testing.status != false %>
+        <th>Score</th>
+        <% if @testing.status === false %>
+          <th>Passed</th>
+        <% else %>
           <th>Remove</th>
         <% end %>
       </tr>
@@ -69,8 +73,10 @@
         <tr>
           <td><%= participant.firstName %> <%= participant.lastName %></td>
           <td><%= participant.rank   ? participant.rank : "NA" %></td>
-          <td><%= participant.total ? "Yes" : "No" %></td>
-          <% if @testing.status != false %>
+          <td><%= participant.total ? participant.total : "NA" %></td>
+          <% if @testing.status == false %>
+            <td><%= participant.total && participant.total.to_i >= 7 ? "Yes" : "No" %></td>
+          <% else %>
             <td>
               <%= link_to 'Remove', [participant.testing, participant], method: :delete,:class => 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
             </td>

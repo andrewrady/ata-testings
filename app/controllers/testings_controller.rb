@@ -60,13 +60,17 @@ class TestingsController < ApplicationController
 
     if @testing.update(testing_params)
       params[:testing][:participants_attributes].each do |key, value|
-        if !value["total"].empty? && value["total"].to_i >= 3
-          @student = Student.find(value["student_id"])
+        @student = Student.find(value["student_id"])
+        if !value["total"].empty? && value["total"].to_i >= 7
           @placement = @ranks.select{ |rank| rank.name == @student.ranks.last.name }
           @newOrder = @placement[0][:order] += 1
 
           @newRank = @ranks.select{ |rank| rank.order == @newOrder}.last
-          @student.ranks.create!(name: @newRank.name, order: @newRank.order, rankType: @newRank.rankType)
+          @student.ranks.create!(name: @newRank.name, order: @newRank.order, rankType: @newRank.rankType, total: value["total"])
+          @student.save
+        else
+          @last = @student.ranks.last
+          @student.ranks.create!(name: @last.name, order: @last.order, rankType: @last.rankType, total: value["total"])
           @student.save
         end
       end
