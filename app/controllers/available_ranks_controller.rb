@@ -44,6 +44,6 @@ class AvailableRanksController < ApplicationController
 
   private
     def available_rank_params
-      params.require(:availableRank).permit(:name, :order, :rankType)
+      params.require(:available_rank).permit(:name, :order, :rankType)
     end
 end

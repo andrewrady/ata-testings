@@ -38,7 +38,7 @@ RSpec.describe AvailableRanksController, type: :controller do
 
   describe "POST available_ranks/:id" do
     it "creates new available rank" do
-      post :create, params: { availableRank: { name: "White", order: 1, rankType: "standard" }}
+      post :create, params: { available_rank: { name: "White", order: 1, rankType: "standard" }}
       expect(response).to redirect_to AvailableRank.last
     end
   end
@@ -50,13 +50,13 @@ RSpec.describe AvailableRanksController, type: :controller do
     end
 
     it "successuly editing record" do
-      put :update, params: { id: @availableRank.id, availableRank: { name: "orange", order: 1, rankType: "standard" }}
+      put :update, params: { id: @availableRank.id, available_rank: { name: "orange", order: 1, rankType: "standard" }}
       @availableRank.reload
       expect(@availableRank.name).to eq("orange")
     end
 
     it "render form if update was not successful" do
-      put :update, params: { id: @availableRank.id, availableRank: { name: "", order: 1, rankType: "standard"}}
+      put :update, params: { id: @availableRank.id, available_rank: { name: "", order: 1, rankType: "standard"}}
       expect(response).to render_template(:edit)
     end
   end
