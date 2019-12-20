@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem "pg", "~> 0.18"
 gem "nokogiri", ">= 1.10.4"
 gem 'faker'
+gem 'rails-controller-testing'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
