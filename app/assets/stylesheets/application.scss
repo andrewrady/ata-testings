@@ -18,3 +18,13 @@
  .container {
     max-width: 1440px;
  }
+ .nav.dropdown:hover {
+    cursor: pointer;
+   .dropdown-menu {
+      display: inline;
+   }
+ }
+ .dropdown-menu {
+    margin: 0;
+    left: -3rem;
+ }
