@@ -45,7 +45,29 @@ RSpec.describe InventoryController, type: :controller do
     end
   end
 
-  # describe "POST inventory/:id" do
+  describe "PUT inventory/:id" do
+    it "renders edit template" do
+      get :edit, params: { id: @inventory.id }
+      expect(response).to render_template(:edit)  
+    end
 
-  # end
+    it "successfully updates the inventory record" do
+      patch :update, params: { id: @inventory.id, inventory: { name: "Chest Protector", cost: 26.99, price: 54.99, user_id: User.first.id, distributor: "WMA"}}
+      @inventory.reload
+      expect(@inventory.name).to eq("Chest Protector")
+    end
+
+    it "render form if update was not successful" do
+      patch :update, params: { id: @inventory.id, inventory: { name: "", cost: 26.99, price: 54.99, user_id: User.first.id, distributor: "WMA"}}
+      @inventory.reload
+      expect(response).to render_template(:edit)
+    end
+  end
+
+  describe "DELETE inventory/:id" do
+    it "deletes record" do
+      delete :destroy, params: { id: @inventory.id }
+      expect(response).to redirect_to inventory_path
+    end
+  end
 end

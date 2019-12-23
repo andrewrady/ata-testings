@@ -49,7 +49,7 @@ RSpec.describe AvailableRanksController, type: :controller do
       expect(response).to render_template(:edit)
     end
 
-    it "successuly editing record" do
+    it "successfully editing record" do
       put :update, params: { id: @availableRank.id, available_rank: { name: "orange", order: 1, rankType: "standard" }}
       @availableRank.reload
       expect(@availableRank.name).to eq("orange")

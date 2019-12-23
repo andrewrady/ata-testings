@@ -3,7 +3,6 @@ class StudentsController < ApplicationController
 
   def index
     @students = Student.all.where(:user_id => current_user)
-    @ranks
   end
 
   def show
