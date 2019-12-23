@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :available_ranks
+  resources :inventory
 
   devise_for :users
 
