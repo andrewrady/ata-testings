@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :available_ranks
   resources :inventory
+  resources :transactions
 
   devise_for :users
 
