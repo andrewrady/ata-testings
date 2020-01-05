@@ -8,7 +8,6 @@ RSpec.describe InventoryController, type: :controller do
   describe "GET /inventory" do
     it "ensures @invetory gets assign" do
       get :index
-
       expect(@inventory.name).to eq("Head Gear")
     end
 
