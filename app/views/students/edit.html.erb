@@ -38,14 +38,16 @@
           <tr>
             <th>Rank</th>
             <th>Type</th>
+            <td>Score</th>
             <th>Date</th>
           </tr>
         </thead>
         <tbody>
           <% @student.ranks.each do |rank| %>
             <tr>
-              <td><%= rank.name %></td>
+              <td><%= rank.name %> <% if rank.total.to_i < 7 %>(No Change)<% end %></td>
               <td><%= rank.rankType %></td>
+              <td><%= rank.total %></td>
               <td><%= rank.created_at.strftime("%m/%d/%Y") %></td>
             </tr>
           <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191208174638) do
+ActiveRecord::Schema.define(version: 20191224034308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 20191208174638) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["testings_id"], name: "index_groups_on_testings_id"
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.float "cost"
+    t.integer "amount"
+    t.string "distributor"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -59,6 +71,7 @@ ActiveRecord::Schema.define(version: 20191208174638) do
     t.string "rankType"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total"
     t.index ["student_id"], name: "index_ranks_on_student_id"
   end
 
@@ -82,6 +95,31 @@ ActiveRecord::Schema.define(version: 20191208174638) do
     t.index ["user_id"], name: "index_testings_on_user_id"
   end
 
+  create_table "transaction_items", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.integer "quantity"
+    t.integer "discount"
+    t.bigint "transactions_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transactions_id"], name: "index_transaction_items_on_transactions_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.float "total"
+    t.boolean "tax"
+    t.float "discount"
+    t.string "authResponse"
+    t.string "authCode"
+    t.string "referenceNumber"
+    t.string "orderId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.index ["student_id"], name: "index_transactions_on_student_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -95,4 +133,6 @@ ActiveRecord::Schema.define(version: 20191208174638) do
   end
 
   add_foreign_key "ranks", "students"
+  add_foreign_key "transaction_items", "transactions", column: "transactions_id"
+  add_foreign_key "transactions", "students"
 end

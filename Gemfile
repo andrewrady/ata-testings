@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem "pg", "~> 0.18"
 gem "nokogiri", ">= 1.10.4"
-gem 'faker'
+gem 'faraday'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,6 +43,9 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails'
+  gem 'faker'
+  gem 'rails-controller-testing'
+  gem "factory_bot_rails"
 end
 
 group :development do

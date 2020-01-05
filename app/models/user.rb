@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :students
   has_many :testings
+  has_many :inventories
 end

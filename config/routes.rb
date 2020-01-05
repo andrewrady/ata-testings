@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     resources :participants
   end
 
+  resources :available_ranks
+  resources :inventory
+  resources :transactions
+
   devise_for :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
