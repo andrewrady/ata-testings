@@ -17,7 +17,7 @@ class InventoryController < ApplicationController
     @inventory.user_id = current_user.id
 
     if @inventory.save
-      redirect_to inventory_path(@inventory)
+      redirect_to inventory_index_path
     else
       render "new"
     end
@@ -31,7 +31,7 @@ class InventoryController < ApplicationController
     @inventory = Inventory.find(params[:id])
 
     if @inventory.update(inventory_params)
-      redirect_to @inventory
+      redirect_to inventory_index_path
     else
       render "edit"
     end
@@ -46,6 +46,6 @@ class InventoryController < ApplicationController
 
   private
     def inventory_params
-      params.require(:inventory).permit(:name, :cost, :price, :distributor)
+      params.require(:inventory).permit(:name, :cost, :price, :distributor, :amount)
     end
 end

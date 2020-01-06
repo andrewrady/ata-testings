@@ -28,7 +28,7 @@ RSpec.describe InventoryController, type: :controller do
     login_user
     it "create new inventory item" do
       post :create, params: { inventory: { name: "Chrest Protector", cost: 24.99, price: 49.99, user_id: User.first.id, distributor: "WMA" }}
-      expect(response).to redirect_to Inventory.last
+      expect(response).to redirect_to inventory_index_path
     end
   end
 

@@ -27,7 +27,14 @@
           <td><%= item.price %></td>
           <td><%= item.amount %></td>
           <td><%= item.distributor %></td>
-          <td><td>
+          <td>
+            <%= link_to edit_inventory_path(item), title: "edit item" do %>
+              <i class="far fa-edit"></i>
+            <% end %>
+            <%= link_to inventory_path(item), method: :delete, title: 'delete item' do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+          <td>
         </tr>
       <% end %>
     </tbody>

@@ -1,0 +1,4 @@
+<h1>Add Item</h1>
+<%= form_for @inventory, :url => { :action => "create" } do |form| %>
+  <%= render partial: "form", locals: {form: form} %>
+<% end %>
