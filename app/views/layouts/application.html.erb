@@ -34,6 +34,9 @@
                   <%= link_to "Ranks", available_ranks_path, :class => "dropdown-link" %>
                 </li>
                 <li class="dropdown-item">
+                  <%= link_to "Inventory", inventory_index_path, :class => "dropdown-link" %>
+                </li>
+                <li class="dropdown-item">
                   <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
                 </li>
               </div>

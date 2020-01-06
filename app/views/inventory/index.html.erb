@@ -1,0 +1,39 @@
+<div class="d-flex flex-row mb-3">
+  <div class="justify-content-start">
+    <h1>Inventory</h1>
+  </div>
+  <div class="align-self-center ml-auto">
+    <%= link_to 'New Item', new_inventory_path, :class => "btn btn-primary" %>
+  </div>
+</div>
+
+<% if @inventory.length > 0 %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Price</th>
+        <th scope="col">Amount</th>
+        <th scope="col">distributor</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @inventory.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.cost %></td>
+          <td><%= item.price %></td>
+          <td><%= item.amount %></td>
+          <td><%= item.distributor %></td>
+          <td><td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-warning">
+    <p>You don't have any items in your inventory</p>
+  </div>
+<% end %>
