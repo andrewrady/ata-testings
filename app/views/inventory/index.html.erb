@@ -15,7 +15,8 @@
         <th scope="col">Cost</th>
         <th scope="col">Price</th>
         <th scope="col">Amount</th>
-        <th scope="col">distributor</th>
+        <th scope="col">Distributor</th>
+        <th scope="col">Tax</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -27,13 +28,14 @@
           <td><%= item.price %></td>
           <td><%= item.amount %></td>
           <td><%= item.distributor %></td>
+          <td><%= item.tax ? "Yes" : "No" %></td>
           <td>
             <%= link_to edit_inventory_path(item), title: "edit item" do %>
               <i class="far fa-edit"></i>
             <% end %>
             <%= link_to inventory_path(item), method: :delete, title: 'delete item' do %>
-            <i class="fas fa-trash"></i>
-          <% end %>
+              <i class="fas fa-trash"></i>
+            <% end %>
           <td>
         </tr>
       <% end %>

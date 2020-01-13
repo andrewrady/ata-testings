@@ -1,7 +1,7 @@
 class InventoryController < ApplicationController
 
   def index
-    @inventory = Inventory.all
+    @inventory = Inventory.all.order("id DESC")
   end
 
   def show
@@ -46,6 +46,6 @@ class InventoryController < ApplicationController
 
   private
     def inventory_params
-      params.require(:inventory).permit(:name, :cost, :price, :distributor, :amount)
+      params.require(:inventory).permit(:name, :cost, :price, :distributor, :amount, :tax)
     end
 end

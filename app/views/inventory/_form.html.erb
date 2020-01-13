@@ -38,7 +38,11 @@
         <div class="col">
           <%= form.number_field :amount, :class => "form-control", placeholder: "Amount" %>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <div class="form-check">
+          <%= form.check_box :tax, :class => "form-check-input" %>
+          <%= form.label :tax, "Tax", :class => "form-check-label" %>
+        </div>
       </div>
     </div>
 
