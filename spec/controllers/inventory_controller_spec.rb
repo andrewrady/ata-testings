@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InventoryController, type: :controller do
+  login_user
   before(:each) do
     User.create!(:email => 'test1@gmail.com', :password => 'password')
     @inventory = Inventory.create(name: "Head Gear", cost: 12.99, price: 19.99, user_id: User.first.id, distributor: "WMA", tax: true)

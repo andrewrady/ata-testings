@@ -1,4 +1,6 @@
 class RanksController < ApplicationController
+  before_action :authenticate_user!
+
   def update
     @student = Student.find(params[:student_id])
     @rank = AvailableRank.find_by(:order => params[:student][:rank][:name].to_i)

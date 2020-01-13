@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AvailableRanksController, type: :controller do
+  login_user
   before(:each) do
     @availableRank = AvailableRank.create(name: "White", order: 1, rankType: "standard")
   end
