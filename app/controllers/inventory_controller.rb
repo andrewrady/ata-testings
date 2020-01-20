@@ -43,7 +43,7 @@ class InventoryController < ApplicationController
     @inventory = Inventory.find(params[:id])
 
     @inventory.destroy
-    redirect_to inventory_path
+    redirect_to inventory_index_path
   end
 
   private
