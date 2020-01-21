@@ -15,7 +15,6 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    @transaction = new
     requestObject = { 
       merchantKey: ENV["merchantKey"], 
       processorId: ENV["processorId"], 
@@ -32,15 +31,22 @@ class TransactionsController < ApplicationController
     requestObject.each do |r|
       r.to_json
     end
-    # raise requestObject.to_json.inspect
-    puts requestObject
-    resp = Faraday.post(ENV["transactionUrl"]+ "/Sale", requestObject)
-    raise resp.inspect
-  end
 
-  private
-    def transaction_params
-      params.require(:transaction).permit(:total, :cardNumber, :cardExpMonth, :cardExpYear, :tax, 
-                                          :discount, :authResponse, :authCode, :referenceNumber, :orderId)
+    resp = Faraday.post(ENV["transactionUrl"] + "/Sale", requestObject)
+    resp = resp.to_hash
+    body = JSON.parse(resp[:body]).with_indifferent_access
+
+    @transaction = Transaction.new(total: params[:transaction][:total], tax: params[:transaction][:tax], discount: params[:transaction][:discount],
+                                    authCode: body[:data][:authCode], authResponse: body[:data][:authResponse], referenceNumber: body[:data][:referenceNumber],
+                                    orderId: body[:data][:orderId], isPartial: body[:data][:isPartial], partialId: body[:data][:partialId], originalFullAmount: body[:data][:originalFullAmount],
+                                    partialAmountApproved: body[:data][:partialAmountApproved], avsResponse: body[:data][:avsResponse], cvv2Response: body[:data][:cvv2Response],
+                                    cardType: body[:data][:cardType], last4: body[:data][:last4], maskedPan: body[:data][:maskedPan], token: body[:data][:token],
+                                    action: body[:action], isError: body[:isError], isSuccess: body[:isSuccess], student_id: params[:student][:id])
+
+    if @transaction.save
+      redirect_to @transaction
+    else
+      render 'new'
     end
+  end
 end

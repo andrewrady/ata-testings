@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200113042146) do
+ActiveRecord::Schema.define(version: 20200121065131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,19 @@ ActiveRecord::Schema.define(version: 20200113042146) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "student_id"
+    t.boolean "isPartial"
+    t.string "partialId"
+    t.float "originalFullAmount"
+    t.float "partialAmountApproved"
+    t.string "avsResponse"
+    t.string "cvv2Response"
+    t.string "cardType"
+    t.string "last4"
+    t.string "maskedPan"
+    t.string "token"
+    t.string "action"
+    t.boolean "isError"
+    t.boolean "isSuccess"
     t.index ["student_id"], name: "index_transactions_on_student_id"
   end
 

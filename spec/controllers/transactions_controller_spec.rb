@@ -33,26 +33,26 @@ RSpec.describe TransactionsController, type: :controller do
     end
   end
 
-  # describe "POST transaction/:id" do
-  #   it "creates a new transaction" do
-  #     post :create, params: { 
-  #       transaction: { 
-  #         total: "1.00", 
-  #         tax: 6, 
-  #         cardNumber: "6011188120789240", 
-  #         cardExpMonth: "02", 
-  #         cardExpYear: "21", 
-  #         discount: 0,
-  #         ownerName: "Chuck Norris",
-  #         ownerStreet: "1600 Pennsylvania Ave NW",
-  #         ownerCity: "Washington",
-  #         ownerState: "DC",
-  #         ownerZip: "20500"
-  #       }, 
-  #       student: { id: Student.first.id}}
-  #     # expect(response).to redirect_to Transaction.last
-  #   end
-  # end
+  describe "POST transaction/:id" do
+    it "creates a new transaction" do
+      post :create, params: { 
+        transaction: { 
+          total: "1.00", 
+          tax: 6, 
+          cardNumber: "6011188120789240", 
+          cardExpMonth: "02", 
+          cardExpYear: "21", 
+          discount: 0,
+          ownerName: "Chuck Norris",
+          ownerStreet: "1600 Pennsylvania Ave NW",
+          ownerCity: "Washington",
+          ownerState: "DC",
+          ownerZip: "20500"
+        }, 
+        student: { id: Student.first.id}}
+      expect(response).to redirect_to Transaction.last
+    end
+  end
 
 
 end
