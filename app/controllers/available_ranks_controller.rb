@@ -17,7 +17,7 @@ class AvailableRanksController < ApplicationController
     @rank = AvailableRank.new(available_rank_params)
 
     if @rank.save
-      redirect_to available_rank_path(@rank)
+      redirect_to available_ranks_path
     else
       render 'new'
     end
@@ -31,7 +31,7 @@ class AvailableRanksController < ApplicationController
     @rank = AvailableRank.find(params[:id])
 
     if @rank.update(available_rank_params)
-      redirect_to @rank
+      redirect_to available_ranks_path
     else
       render 'edit'
     end

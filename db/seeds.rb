@@ -22,7 +22,7 @@ end
   Testing.create(status: status, location: location, date: date, user_id: user_id)
 end
 
-25.times do
+70.times do
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
   size = Constants::AvailableSizes.sample

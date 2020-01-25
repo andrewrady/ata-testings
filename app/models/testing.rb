@@ -1,6 +1,6 @@
 class Testing < ApplicationRecord
   belongs_to :user
-  has_many :participants
+  has_many :participants, dependent: :destroy
 
   validates :location, presence: true
   validates :date, presence: true

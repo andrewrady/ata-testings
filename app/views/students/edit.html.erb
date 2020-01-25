@@ -1,3 +1,5 @@
+<h1 class="py-2"><%= @student.firstName %> <%= @student.lastName %></h1>
+
 <ul class="nav nav-tabs my-3">
   <li class="nav-item" data-label="General">
     <a class="nav-link active" href="#">General</a>
@@ -9,7 +11,6 @@
 
 <div class="tab-content">
   <div class="tab-pane fade show active general">
-    <h1 class="py-2"><%= @student.firstName %> <%= @student.lastName %></h1>
     <%= render 'form', student: @student %>
   </div>
   <div class="tab-pane fade show ranks" aria-labelledby="ranks">
@@ -32,7 +33,6 @@
         </div>
       </div>
     <% else %>
-      <h1>Ranks</h1>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -45,7 +45,7 @@
         <tbody>
           <% @student.ranks.each do |rank| %>
             <tr>
-              <td><%= rank.name %> <% if rank.total.to_i < 7 %>(No Change)<% end %></td>
+              <td><%= rank.name %> <% if rank.total.to_i < 7 && !@student.ranks.first %>(No Change)<% end %></td>
               <td><%= rank.rankType %></td>
               <td><%= rank.total %></td>
               <td><%= rank.created_at.strftime("%m/%d/%Y") %></td>
