@@ -104,7 +104,7 @@ class TestingsController < ApplicationController
         elsif(@student.length > 1)
           if(@currentRankList.has_key? rank.name)
             @currentRankList[rank.name].each do |s,v| 
-              if(v[0][:size] != @student[0][:size])
+              if(s[:size] != @student[0][:size])
                 @currentRankList[rank.name].push({:size => @student.pluck(:size)[0], :total => @student.length})
                 break
               end
