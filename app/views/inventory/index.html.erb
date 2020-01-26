@@ -24,8 +24,8 @@
       <% @inventory.each do |item| %>
         <tr>
           <td><%= item.name %></td>
-          <td><%= item.cost %></td>
-          <td><%= item.price %></td>
+          <td><%= number_to_currency(item.cost) %></td>
+          <td><%= number_to_currency(item.price) %></td>
           <td><%= item.amount %></td>
           <td><%= item.distributor %></td>
           <td><%= item.tax ? "Yes" : "No" %></td>
