@@ -2,7 +2,7 @@ class TestingsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @testings = Testing.all.order(:status).order(created_at: :desc)
+    @testings = Testing.all.order(created_at: :desc)
   end
 
   def show
