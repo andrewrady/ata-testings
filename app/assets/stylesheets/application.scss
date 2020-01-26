@@ -1,30 +1,47 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
- @import "bootstrap";
- @import "reports";
- .container {
-    max-width: 1440px;
- }
- .nav.dropdown:hover {
-    cursor: pointer;
-   .dropdown-menu {
-      display: inline;
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+* vendor/assets/stylesheets directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+* files in this directory. Styles in this file should be added after the last require_* statement.
+* It is generally better to create a new file per style scope.
+*
+*= require_tree .
+*= require_self
+*/
+@import "bootstrap";
+@import "reports";
+.container {
+   max-width: 1440px;
+}
+.nav.dropdown:hover {
+   cursor: pointer;
+.dropdown-menu {
+   display: inline;
+}
+}
+.dropdown-menu {
+   margin: 0;
+   left: -3rem;
+}
+
+@media only screen and (max-width: 991px) {
+   .nav-link, .nav.dropdown .nav-link {
+      text-align: center;
+      width: 100%;
    }
- }
- .dropdown-menu {
-    margin: 0;
-    left: -3rem;
- }
+   .dropdown-menu {
+      border: 0;
+      position: relative;
+      display: block;
+      left: 0;
+      width: 100%;
+      .dropdown-item {
+         text-align: center;
+      }
+   }
+}
