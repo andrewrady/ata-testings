@@ -67,7 +67,7 @@ RSpec.describe InventoryController, type: :controller do
   describe "DELETE inventory/:id" do
     it "deletes record" do
       delete :destroy, params: { id: @inventory.id }
-      expect(response).to redirect_to inventory_path
+      expect(response).to redirect_to inventory_index_path
     end
   end
 end

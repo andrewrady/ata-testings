@@ -40,7 +40,7 @@ RSpec.describe AvailableRanksController, type: :controller do
   describe "POST available_ranks/:id" do
     it "creates new available rank" do
       post :create, params: { available_rank: { name: "White", order: 1, rankType: "standard" }}
-      expect(response).to redirect_to AvailableRank.last
+      expect(response).to redirect_to available_ranks_path
     end
   end
 
