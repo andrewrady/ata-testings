@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     resources :participants
   end
 
+  namespace :v1 do
+    resources :students
+  end
+
   resources :available_ranks
   resources :inventory
   resources :transactions
