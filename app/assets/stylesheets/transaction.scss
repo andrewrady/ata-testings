@@ -2,8 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.total {
+.pos-button {
   width: 8rem;
   height: 7rem;
   text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.red {
+  color: red !important;
+}
+.close {
+  font-size: 2rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.card-text p{
+  margin: 0;
 }
