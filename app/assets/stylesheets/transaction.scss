@@ -2,12 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.pos-button {
+.pos-icon {
   width: 8rem;
   height: 7rem;
+  justify-content: center;
   text-align: center;
-  &:hover {
-    cursor: pointer;
+  margin: auto;
+  &-button {
+    transition: .2s;
+    &:hover {
+      cursor: pointer;
+      width: 8.6rem;
+      height: 7.6rem;
+    }
   }
 }
 

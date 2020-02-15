@@ -43,15 +43,15 @@
         <button class="btn btn-primary" @click="items.push(itemTemplate)">Add Item</button>
       </div> -->
       </div>
-      <div class="col-2">
-        <div class="alert alert-info rounded-circle pos-button">
+      <div class="col-2 d-flex flex-column justify-content-center">
+        <div class="alert alert-info rounded-circle pos-icon">
           <p>Total</p>
           {{ total | money }}
         </div>
-        <div class="alert alert-success rounded-circle pos-button d-flex">
+        <div class="alert alert-success rounded-circle pos-icon pos-icon-button d-flex">
           <h4 class="align-self-center">Charge</h4>
         </div>
-        <div class="alert alert-primary rounded-circle pos-button d-flex" @click="items.push(itemTemplate)">
+        <div class="alert alert-primary rounded-circle pos-icon pos-icon-button d-flex" @click="items.push(itemTemplate)">
           <h4 class="align-self-center">Add Item</h4>
         </div>
       </div>
