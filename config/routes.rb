@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :students do
     resources :ranks
   end
-  
+
   resources :testings do
     get "/scores", :to => "testings#score"
     post "/scores", :to => "testings#processing"
@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     resources :students do
+      post 'search', on: :collection
+    end
+
+    resources :inventory do
       post 'search', on: :collection
     end
   end
