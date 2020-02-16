@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   root "testings#index"
   resources :students do
     resources :ranks
   end
+  
   resources :testings do
     get "/scores", :to => "testings#score"
     post "/scores", :to => "testings#processing"
@@ -11,14 +14,12 @@ Rails.application.routes.draw do
   end
 
   namespace :v1 do
-    resources :students
+    resources :students do
+      post 'search', on: :collection
+    end
   end
 
   resources :available_ranks
   resources :inventory
   resources :transactions
-
-  devise_for :users
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
