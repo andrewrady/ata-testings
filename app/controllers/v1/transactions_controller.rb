@@ -23,15 +23,19 @@ class V1::TransactionsController < ApplicationController
     resp = resp.to_hash
     body = JSON.parse(resp[:body]).with_indifferent_access
 
-    @transaction = Transaction.new(total: params[:transaction][:total], tax: params[:transaction][:tax], discount: params[:transaction][:discount],
-                                    authCode: body[:data][:authCode], authResponse: body[:data][:authResponse], referenceNumber: body[:data][:referenceNumber],
-                                    orderId: body[:data][:orderId], isPartial: body[:data][:isPartial], partialId: body[:data][:partialId], originalFullAmount: body[:data][:originalFullAmount],
-                                    partialAmountApproved: body[:data][:partialAmountApproved], avsResponse: body[:data][:avsResponse], cvv2Response: body[:data][:cvv2Response],
-                                    cardType: body[:data][:cardType], last4: body[:data][:last4], maskedPan: body[:data][:maskedPan], token: body[:data][:token],
-                                    action: body[:action], isError: body[:isError], isSuccess: body[:isSuccess], student_id: params[:student][:id])
+    if(body[:validationHasFailed] == true)
+      render json: { error: { key: body[:validationFailures][0][:key], value: body[:validationFailures][0][:message] }}, status: 422
+    else
+      @transaction = Transaction.new(total: params[:transaction][:total], tax: params[:transaction][:tax], discount: params[:transaction][:discount],
+        authCode: body[:data][:authCode], authResponse: body[:data][:authResponse], referenceNumber: body[:data][:referenceNumber],
+        orderId: body[:data][:orderId], isPartial: body[:data][:isPartial], partialId: body[:data][:partialId], originalFullAmount: body[:data][:originalFullAmount],
+        partialAmountApproved: body[:data][:partialAmountApproved], avsResponse: body[:data][:avsResponse], cvv2Response: body[:data][:cvv2Response],
+        cardType: body[:data][:cardType], last4: body[:data][:last4], maskedPan: body[:data][:maskedPan], token: body[:data][:token],
+        action: body[:action], isError: body[:isError], isSuccess: body[:isSuccess], student_id: params[:student][:id])
 
-    if @transaction.save
-      redirect_to json: @transaction, status: 200
+      if @transaction.save
+        render json: @transaction, status: 200
+      end
     end
   end
 end

@@ -28,7 +28,28 @@ RSpec.describe V1::TransactionsController, type: :controller do
         student: { id: Student.first.id}}
       expect(response).to have_http_status(:success)
     end
+
+    it "renders errors from extneral api" do
+      post :create, params: { 
+        transaction: { 
+          total: "1.00", 
+          tax: 6, 
+          cardNumber: "6011188120789240", 
+          cardExpMonth: "14", 
+          cardExpYear: "21", 
+          discount: 0,
+          ownerName: "Chuck Norris",
+          ownerStreet: "1600 Pennsylvania Ave NW",
+          ownerCity: "Washington",
+          ownerState: "DC",
+          ownerZip: "20500"
+        }, 
+        student: { id: Student.first.id}}
+        json_response = JSON.parse(response.body)
+
+        expect(response).to have_http_status(422)
+        expect(json_response['error']['key']).to eq('cardExpMonth')
+    end
+
   end
-
-
 end
