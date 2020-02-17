@@ -38,10 +38,6 @@
         :index="index"
         :item="item">
       </pos-item>
-      <!-- <div class="d-flex justify-content-between">
-        <button class="btn btn-success">Charge</button>
-        <button class="btn btn-primary" @click="items.push(itemTemplate)">Add Item</button>
-      </div> -->
       </div>
       <div class="col-2 d-flex flex-column justify-content-center">
         <div class="alert alert-info rounded-circle pos-icon">
