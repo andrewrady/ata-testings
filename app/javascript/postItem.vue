@@ -19,7 +19,7 @@
       <input type="text" class="form-control"  placeholder="price">
     </div>
     <div class="form-group col-md-">
-      <input type="text" class="form-control" placeholder="qunity">
+      <input type="text" class="form-control" placeholder="quantity">
     </div>
     <div class="form-group">
       <div class="form-check">

@@ -3,41 +3,64 @@
     <h1>POS Terminal</h1>
     <div class="row">
       <div class="col-10">
-      <form @submit.prevent>
-        <div class="form-row">
-          <div class="form-group d-flex">
-            <input type="text"  class="form-control mx-2" placeholder="Search name">
-            <button class="btn btn-primary">Search</button>
-          </div>
-        </div>
-      </form>
-      <div class="results d-flex my-2">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Student Name</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Rank</h6>
-            <div class="card-text">
-              <p>9105 W Laguna Ct, Boise Idaho</p>
-              <p>9105 W Laguna Ct, Boise Idaho</p>
+        <template v-if="!activeStudent">
+          <form @submit.prevent>
+            <div class="form-row">
+              <div class="form-group d-flex">
+                <input 
+                  type="text"  
+                  class="form-control mx-2" 
+                  placeholder="Search name" 
+                  v-model="searchTerm" 
+                  @keyup="debounceSearch">
+                <button class="d-flex btn btn-primary">
+                  <span v-if="loadingSearch" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Search
+                </button>
+                
+              </div>
             </div>
-            <a href="#" class="card-link" target="_blank">Profile</a>
+          </form>
+          <div class="results d-flex flex-wrap my-2" v-if="searchResults.length">
+            <div 
+              class="card m-2 pointer" 
+              style="width: 18rem;"
+              @click="setActiveStudent(student)"
+              v-for="(student, index) in searchResults" 
+              :key="index">
+              <div class="card-body">
+                <h5 class="card-title">{{ student.firstName }} {{ student.lastName }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Rank</h6>
+                <div class="card-text">
+                  <p>9105 W Laguna Ct, Boise Idaho</p>
+                  <p>9105 W Laguna Ct, Boise Idaho</p>
+                </div>
+                <a :href="`/students/${student.id}/edit`" class="card-link" target="_blank">Profile</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card mx-2" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
+        </template>
+        <template v-else>
+          <div class="card w-50 my-3">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                Active Student
+                <i class="fas fa-times pointer" @click="activeStudent = null"></i>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ activeStudent.firstName }} {{ activeStudent.lastName }}</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a :href="`/students/${activeStudent.id}/edit`" class="card-link" target="_blank">Profile</a>
+            </div>
           </div>
-        </div>
-      </div>
-      <pos-item
-        v-for="(item, index) in items"
-        :key="index"
-        :index="index"
-        :item="item">
-      </pos-item>
+          <pos-item
+            v-for="(item, index) in items"
+            :key="index"
+            :index="index"
+            :item="item">
+          </pos-item>
+        </template>
       </div>
       <div class="col-2 d-flex flex-column justify-content-center">
         <div class="alert alert-info rounded-circle pos-icon">
@@ -69,16 +92,51 @@ export default {
   },
   data() {
     return {
+      searchTerm: '',
+      searchTimer: null,
+      loadingSearch: false,
+      searchResults: [],
+      activeStudent: null,
       items: [],
       itemTemplate: {
         name: '',
         price: null,
-        tax: null
+        tax: null,
       }
     }
   },
   mounted() {
     this.items.push(this.itemTemplate);
+  },
+  methods: {
+    debounceSearch() {
+      this.loadingSearch = true;
+      clearTimeout(this.searchTimer);
+      this.searchTimer = setTimeout(() => {
+        this.search();
+      }, 1000);
+    },
+    search() {
+      fetch('/v1/students/search', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ name: this.searchTerm })
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.searchResults = res;
+      })
+      .finally(() => {
+        this.loadingSearch = false;
+      })
+    },
+    setActiveStudent(student) {
+      this.activeStudent = student;
+      this.searchResults = [];
+      this.searchTerm = '';
+    }
   },
   filters: {
     money(value){

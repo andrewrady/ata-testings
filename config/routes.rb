@@ -26,5 +26,5 @@ Rails.application.routes.draw do
 
   resources :available_ranks
   resources :inventory
-  resources :transactions, except: [:create, :new]
+  resources :transactions, except: [:create]
 end
