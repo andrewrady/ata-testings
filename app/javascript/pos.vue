@@ -23,8 +23,7 @@
           </form>
           <div class="results d-flex flex-wrap my-2" v-if="searchResults.length">
             <div 
-              class="card m-2 pointer" 
-              style="width: 18rem;"
+              class="card card-student m-2 pointer" 
               @click="setActiveStudent(student)"
               v-for="(student, index) in searchResults" 
               :key="index">
@@ -58,7 +57,9 @@
             v-for="(item, index) in items"
             :key="index"
             :index="index"
-            :item="item">
+            :item="item"
+            @add="addItemContent"
+            @remove="removeItem">
           </pos-item>
         </template>
       </div>
@@ -70,7 +71,7 @@
         <div class="alert alert-success rounded-circle pos-icon pos-icon-button d-flex">
           <h4 class="align-self-center">Charge</h4>
         </div>
-        <div class="alert alert-primary rounded-circle pos-icon pos-icon-button d-flex" @click="items.push(itemTemplate)">
+        <div class="alert alert-primary rounded-circle pos-icon pos-icon-button d-flex" @click="addItem">
           <h4 class="align-self-center">Add Item</h4>
         </div>
       </div>
@@ -87,7 +88,13 @@ export default {
   },
   computed: {
     total() {
-      return 20
+      if(this.items.length == 1) {
+        return parseFloat(this.items[0].price)
+      }
+      return this.items.reduce((a,b) => {
+        if(a && b)
+          a.price + b.price;
+      }, 0)
     }
   },
   data() {
@@ -97,18 +104,21 @@ export default {
       loadingSearch: false,
       searchResults: [],
       activeStudent: null,
-      items: [],
-      itemTemplate: {
-        name: '',
-        price: null,
-        tax: null,
-      }
+      items: []
     }
   },
   mounted() {
-    this.items.push(this.itemTemplate);
+    this.addItem();
   },
   methods: {
+    addItem() {
+      const item = {
+        name: '',
+        price: 0,
+        tax: null,
+      }
+      this.items.push(item);
+    },
     debounceSearch() {
       this.loadingSearch = true;
       clearTimeout(this.searchTimer);
@@ -136,12 +146,21 @@ export default {
       this.activeStudent = student;
       this.searchResults = [];
       this.searchTerm = '';
+    },
+    addItemContent(value) {
+      let currentItem = this.items[value.index]
+      currentItem.name = value.item.name;
+      currentItem.price = value.item.price;
+      currentItem.tax = value.item.tax;
+    },
+    removeItem(value) {
+      this.items.splice(value, 1);
     }
   },
   filters: {
     money(value){
       let test = value;
-      if(!test) 0;
+      if(!test) test = 0;
 
       return test.toLocaleString('en-US', {
         style: 'currency',
