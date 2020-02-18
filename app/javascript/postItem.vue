@@ -1,6 +1,6 @@
 <template>
   <div class="form-row">
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-7">
       <input 
         v-if="!item.name"
         v-model="itemSearch"
@@ -17,7 +17,7 @@
         placeholder="name">
       <template v-if="results.length">
         <div 
-          class="card rounded-0"
+          class="card rounded-0 pointer"
           v-for="(item, index) in results"
           :key="index"
           @click="addItem(item)">
@@ -34,13 +34,6 @@
         class="form-control"
         placeholder="price"
         v-model="item.price">
-    </div>
-    <div class="form-group col-md-">
-      <input 
-        v-model="amount"
-        type="text" 
-        class="form-control" 
-        placeholder="quantity">
     </div>
     <div class="form-group">
       <div class="form-check">
@@ -73,6 +66,7 @@ export default {
   methods: {
     debounceSearch() {
       this.loadingItemSearch = true;
+      this.results = [];
       clearTimeout(this.itemSearchTimer);
       this.searchTimer = setTimeout(() => {
         this.search();

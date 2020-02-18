@@ -17,7 +17,6 @@
                   <span v-if="loadingSearch" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Search
                 </button>
-                
               </div>
             </div>
           </form>
@@ -37,6 +36,10 @@
                 <a :href="`/students/${student.id}/edit`" class="card-link" target="_blank">Profile</a>
               </div>
             </div>
+          </div>
+          <div v-else-if="hasSearched && !searchResults.length" class="alert alert-warning d-flex justify-content-between align-items-center">
+            <p class="m-0">No students found</p>
+            <i class="fas fa-times pointer" @click="clearSearch"></i>
           </div>
         </template>
         <template v-else>
@@ -103,6 +106,7 @@ export default {
       searchTimer: null,
       loadingSearch: false,
       searchResults: [],
+      hasSearched: false,
       activeStudent: null,
       items: []
     }
@@ -120,9 +124,14 @@ export default {
       this.items.push(item);
     },
     debounceSearch() {
+      if(!this.searchTerm) {
+        this.clearSearch();
+        return;
+      }
+
       this.loadingSearch = true;
       clearTimeout(this.searchTimer);
-      this.searchTimer = setTimeout(() => {
+      setTimeout(() => {
         this.search();
       }, 1000);
     },
@@ -139,8 +148,15 @@ export default {
         this.searchResults = res;
       })
       .finally(() => {
+        this.hasSearched = true;
         this.loadingSearch = false;
       })
+    },
+    clearSearch() {
+      console.log('Winter is comingf')
+      this.searchTerm = '';
+      this.searchResults = [];
+      this.hasSearched = false;
     },
     setActiveStudent(student) {
       this.activeStudent = student;
