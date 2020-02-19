@@ -14,7 +14,6 @@ RSpec.describe V1::TransactionsController, type: :controller do
       post :create, params: { 
         transaction: { 
           total: "1.00", 
-          tax: 6, 
           cardNumber: "6011188120789240", 
           cardExpMonth: "02", 
           cardExpYear: "21", 
@@ -33,7 +32,6 @@ RSpec.describe V1::TransactionsController, type: :controller do
       post :create, params: { 
         transaction: { 
           total: "1.00", 
-          tax: 6, 
           cardNumber: "6011188120789240", 
           cardExpMonth: "14", 
           cardExpYear: "21", 

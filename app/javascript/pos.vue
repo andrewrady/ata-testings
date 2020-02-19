@@ -71,7 +71,7 @@
           <p>Total</p>
           {{ total | money }}
         </div>
-        <div class="alert alert-success rounded-circle pos-icon pos-icon-button d-flex">
+        <div class="alert alert-success rounded-circle pos-icon pos-icon-button d-flex" @click="charge">
           <h4 class="align-self-center">Charge</h4>
         </div>
         <div class="alert alert-primary rounded-circle pos-icon pos-icon-button d-flex" @click="addItem">
@@ -79,25 +79,40 @@
         </div>
       </div>
     </div>
+    <confirmation-modal ref="confirm"></confirmation-modal>
   </div>
 </template>
 
 <script>
-import posItem from './postItem.vue';
+import posItem from './postItem.vue'
+import confirmationModal from './confirmModal'
+
 export default {
   name: 'pos',
   components: {
-    posItem
+    posItem,
+    confirmationModal
   },
   computed: {
     total() {
       if(this.items.length == 1) {
+        if(this.items[0].tax) {
+          let tax = parseFloat(this.items[0].price) * this.taxPercent
+          return parseFloat(this.items[0].price) + tax
+        }
         return parseFloat(this.items[0].price)
+      } else {
+        return this.items.map(x => {
+          if(x.tax) {
+            let tax = parseFloat(x.price) * this.taxPercent
+            return parseFloat(x.price) + tax
+          } else {
+            return parseFloat(x.price)
+          }
+        }).reduce((a,b) => {
+          return a + b
+        }, 0)
       }
-      return this.items.reduce((a,b) => {
-        if(a && b)
-          a.price + b.price;
-      }, 0)
     }
   },
   data() {
@@ -108,32 +123,62 @@ export default {
       searchResults: [],
       hasSearched: false,
       activeStudent: null,
-      items: []
+      taxPercent: 0.06,
+      items: [],
+      card: {
+        cardNumber: '',
+        cardExpMonth: '',
+        cardExpYear: '',
+        ownerName: '',
+        ownerStreet: '',
+        ownerCity: '',
+        ownerState: '',
+        ownerZip: ''
+      }
     }
   },
   mounted() {
     this.addItem();
   },
   methods: {
+    async charge() {
+      if(!this.activeStudent && !this.total) return;
+
+      if(await this.$refs.confirm.open(`Are you sure you want to charge ${this.activeStudent.firstName} ${this.activeStudent.lastName} $${parseFloat(this.total)}?`)) {
+        const content = {...this.card}
+        content.total = this.total
+        fetch('/v1/transactions', {
+          method: 'post',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(content)
+        })
+        .then(res => res.json())
+        .then(res => {
+          history.pushState({url: `/student/${this.activeStudent.id}/edit`})
+        })
+      }
+    },
     addItem() {
       const item = {
         name: '',
         price: 0,
         tax: null,
       }
-      this.items.push(item);
+      this.items.push(item)
     },
     debounceSearch() {
       if(!this.searchTerm) {
-        this.clearSearch();
-        return;
+        this.clearSearch()
+        return
       }
 
-      this.loadingSearch = true;
-      clearTimeout(this.searchTimer);
+      this.loadingSearch = true
+      clearTimeout(this.searchTimer)
       setTimeout(() => {
-        this.search();
-      }, 1000);
+        this.search()
+      }, 1000)
     },
     search() {
       fetch('/v1/students/search', {
@@ -145,38 +190,37 @@ export default {
       })
       .then(res => res.json())
       .then(res => {
-        this.searchResults = res;
+        this.searchResults = res
       })
       .finally(() => {
-        this.hasSearched = true;
-        this.loadingSearch = false;
+        this.hasSearched = true
+        this.loadingSearch = false
       })
     },
     clearSearch() {
-      console.log('Winter is comingf')
-      this.searchTerm = '';
-      this.searchResults = [];
-      this.hasSearched = false;
+      this.searchTerm = ''
+      this.searchResults = []
+      this.hasSearched = false
     },
     setActiveStudent(student) {
-      this.activeStudent = student;
-      this.searchResults = [];
-      this.searchTerm = '';
+      this.activeStudent = student
+      this.searchResults = []
+      this.searchTerm = ''
     },
     addItemContent(value) {
       let currentItem = this.items[value.index]
-      currentItem.name = value.item.name;
-      currentItem.price = value.item.price;
-      currentItem.tax = value.item.tax;
+      currentItem.name = value.item.name
+      currentItem.price = value.item.price
+      currentItem.tax = value.item.tax
     },
     removeItem(value) {
-      this.items.splice(value, 1);
+      this.items.splice(value, 1)
     }
   },
   filters: {
     money(value){
-      let test = value;
-      if(!test) test = 0;
+      let test = value
+      if(!test) test = 0
 
       return test.toLocaleString('en-US', {
         style: 'currency',
