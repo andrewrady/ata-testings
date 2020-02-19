@@ -64,9 +64,36 @@
             @add="addItemContent"
             @remove="removeItem">
           </pos-item>
+          <hr>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Card Number</label>
+              <input class="form-control" type="text" placeholder="Card Number" v-model="card.cardNumber">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Experation Month</label>
+              <select v-model="card.cardExpMonth" class="form-control">
+                <option 
+                  v-for="(month, index) in expMonths"
+                  :key="index">
+                  {{ month }}  
+                </option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label>Exp Years</label>
+              <select v-model="card.expYears" class="form-control">
+                <option
+                  v-for="(year, index) in expYears"
+                  :key="index">
+                  {{ year }}
+                </option>
+              </select>
+            </div>
+          </div>
         </template>
       </div>
-      <div class="col-2 d-flex flex-column justify-content-center">
+      <div class="col-2 d-flex flex-column">
         <div class="alert alert-info rounded-circle pos-icon">
           <p>Total</p>
           {{ total | money }}
@@ -81,9 +108,9 @@
     </div>
     <confirmation-modal ref="confirm"></confirmation-modal>
   </div>
-</template>
-
-<script>
+</template>1
+1
+<script>1
 import posItem from './postItem.vue'
 import confirmationModal from './confirmModal'
 
@@ -113,10 +140,19 @@ export default {
           return a + b
         }, 0)
       }
+    },
+    expYears() {
+      let currentYear = new Date().getFullYear()
+      let decade = 10
+      let results = [currentYear]
+      for(let i = 0; i < decade; i++) {
+        results.push(currentYear++)
+      }
+      return results
     }
   },
   data() {
-    return {
+    return { 
       searchTerm: '',
       searchTimer: null,
       loadingSearch: false,
@@ -125,6 +161,7 @@ export default {
       activeStudent: null,
       taxPercent: 0.06,
       items: [],
+      expMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       card: {
         cardNumber: '',
         cardExpMonth: '',
