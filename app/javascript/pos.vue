@@ -90,6 +90,10 @@
                 </option>
               </select>
             </div>
+            <div class="form-group col-md-2">
+              <label>cvv</label>
+              <input type="text" v-model="card.cVV" class="form-control">
+            </div>
           </div>
         </template>
       </div>
@@ -165,12 +169,7 @@ export default {
       card: {
         cardNumber: '',
         cardExpMonth: '',
-        cardExpYear: '',
-        ownerName: '',
-        ownerStreet: '',
-        ownerCity: '',
-        ownerState: '',
-        ownerZip: ''
+        cardExpYear: ''
       }
     }
   },
