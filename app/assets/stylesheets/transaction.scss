@@ -1,3 +1,43 @@
 // Place all the styles related to the transaction controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.pos-icon {
+  width: 8rem;
+  height: 7rem;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  &-button {
+    transition: .2s;
+    &:hover {
+      cursor: pointer;
+      width: 8.6rem;
+      height: 7.6rem;
+    }
+  }
+}
+
+.red {
+  color: red !important;
+}
+.close {
+  font-size: 2rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.card {
+  &-student {
+    height: 10rem;
+    width: 18rem;
+    transition: .3s;
+    &:hover { //not the complete effect desired
+      height: 10.3rem;
+      width: 18.3rem;
+    }
+  }
+}
+.card-text p{
+  margin: 0;
+}

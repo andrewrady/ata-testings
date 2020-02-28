@@ -29,6 +29,10 @@
    left: -3rem;
 }
 
+.pointer {
+   cursor: pointer;
+}
+
 @media only screen and (max-width: 991px) {
    .nav-link, .nav.dropdown .nav-link {
       text-align: center;
