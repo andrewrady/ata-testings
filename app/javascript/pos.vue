@@ -1,6 +1,12 @@
 <template>
   <div class="container">
     <h1>POS Terminal</h1>
+    <div class="alert alert-danger" v-if="errors.message">
+      <strong>{{ errors.type }}</strong> {{ errors.message }}
+      <button type="button" class="close" @click="closeError" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div class="row">
       <div class="col-10">
         <template v-if="!activeStudent">
@@ -82,7 +88,7 @@
             </div>
             <div class="form-group col-md-2">
               <label>Exp Years</label>
-              <select v-model="card.expYears" class="form-control">
+              <select v-model="card.cardExpYear" class="form-control">
                 <option
                   v-for="(year, index) in expYears"
                   :key="index">
@@ -165,6 +171,7 @@ export default {
       activeStudent: null,
       taxPercent: 0.06,
       items: [],
+      errors: { type: '', message: ''},
       expMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       card: {
         cardNumber: '',
@@ -182,7 +189,11 @@ export default {
 
       if(await this.$refs.confirm.open(`Are you sure you want to charge ${this.activeStudent.firstName} ${this.activeStudent.lastName} $${parseFloat(this.total)}?`)) {
         const content = {...this.card}
+        content.cardExpYear = content.cardExpYear.toString().substr(-2)
         content.total = this.total
+        content.student = {
+          id: this.activeStudent.id
+        }
         fetch('/v1/transactions', {
           method: 'post',
           headers: {
@@ -190,9 +201,21 @@ export default {
           },
           body: JSON.stringify(content)
         })
-        .then(res => res.json())
         .then(res => {
-          history.pushState({url: `/student/${this.activeStudent.id}/edit`})
+          if(!res.ok) {
+            throw res
+          }
+          res.json()
+        })
+        // .then(res => {
+        //   history.pushState({url: `/student/${this.activeStudent.id}/edit`})
+        // })
+        .catch(err => {
+          err.text().then(error => {
+            let response = JSON.parse(error);
+            this.errors.type = response.error.key
+            this.errors.message =  response.error.value
+          })
         })
       }
     },
@@ -232,6 +255,9 @@ export default {
         this.hasSearched = true
         this.loadingSearch = false
       })
+    },
+    closeError() {
+      this.errors = { type: '', message: '' }
     },
     clearSearch() {
       this.searchTerm = ''

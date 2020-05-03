@@ -12,26 +12,22 @@ RSpec.describe V1::TransactionsController, type: :controller do
   describe "POST v1/transactions" do
     it "creates a new transaction" do
       post :create, params: { 
-        transaction: { 
-          total: "1.00", 
-          cardNumber: "6011188120789240", 
-          cardExpMonth: "02", 
-          cardExpYear: "21", 
-          discount: 0
-        }, 
+        total: "1.00", 
+        cardNumber: "6011188120789240", 
+        cardExpMonth: "02", 
+        cardExpYear: "21", 
+        discount: 0,
         student: { id: Student.first.id}}
       expect(response).to have_http_status(:success)
     end
 
     it "renders errors from extneral api" do
       post :create, params: { 
-        transaction: { 
-          total: "1.00", 
-          cardNumber: "6011188120789240", 
-          cardExpMonth: "14", 
-          cardExpYear: "21", 
-          discount: 0
-        }, 
+        total: "1.00", 
+        cardNumber: "6011188120789240", 
+        cardExpMonth: "14", 
+        cardExpYear: "21", 
+        discount: 0,
         student: { id: Student.first.id}}
         json_response = JSON.parse(response.body)
 
