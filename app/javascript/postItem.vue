@@ -1,16 +1,13 @@
 <template>
   <div class="form-row">
+    <div class="spinner-holder">
+      <div v-if="loadingItemSearch" class="spinner-border spinner-border-sm" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
     <div class="form-group col-md-7">
       <input 
-        v-if="!item.name"
         v-model="itemSearch"
-        @keyup="debounceSearch"
-        type="text" 
-        class="form-control" 
-        placeholder="name">
-      <input 
-        v-else
-        v-model="item.name"
         @keyup="debounceSearch"
         type="text" 
         class="form-control" 
@@ -26,6 +23,13 @@
           </div>
         </div>
       </template>
+      <div
+        v-if="!results.length && hasSearched"
+        class="card rounded-0">
+        <div class="card-body">
+        No results found
+        </div>
+      </div>
     </div>
     <div class="form-group col-md-3">
       <input 
@@ -59,13 +63,15 @@ export default {
       amount: null,
       itemSearch: '',
       results: [],
-      loadingItemSearch: null,
-      itemSearchTimer: null
+      loadingItemSearch: false,
+      itemSearchTimer: null,
+      hasSearched: false
     }
   },
   methods: {
     debounceSearch() {
       this.loadingItemSearch = true;
+      this.hasSearched = false;
       this.results = [];
       clearTimeout(this.itemSearchTimer);
       this.searchTimer = setTimeout(() => {
@@ -73,6 +79,11 @@ export default {
       }, 1000);
     },
     search() {
+      if(!this.itemSearch.trim()) {
+        this.loadingItemSearch = false;
+        return;
+      } 
+
       fetch('/v1/inventory/search', {
         method: 'post',
         headers: {
@@ -86,10 +97,12 @@ export default {
       })
       .finally(() => {
         this.loadingItemSearch = false;
+        this.hasSearched = true;
       })
     },
     addItem(item) {
       this.results = [];
+      this.hasSearched = false;
       this.$emit('add', { item: item, index: this.index })
     },
     removeItem() {
