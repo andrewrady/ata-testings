@@ -180,13 +180,13 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.addItem();
   },
   methods: {
     async charge() {
       if(!this.activeStudent && !this.total) return;
-
+      document.body.classList.toggle('modal-open');
       if(await this.$refs.confirm.open(`Are you sure you want to charge ${this.activeStudent.firstName} ${this.activeStudent.lastName} $${parseFloat(this.total)}?`)) {
         const content = {...this.card}
         content.cardExpYear = content.cardExpYear.toString().substr(-2)
