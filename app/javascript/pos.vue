@@ -207,9 +207,7 @@ export default {
           }
           res.json()
         })
-        // .then(res => {
-        //   history.pushState({url: `/student/${this.activeStudent.id}/edit`})
-        // })
+        .then(() => window.location = `/students/${this.activeStudent.id}/edit`)
         .catch(err => {
           err.text().then(error => {
             let response = JSON.parse(error);
