@@ -13,7 +13,7 @@ RSpec.describe Student, type: :model do
       expect(student.errors[:firstName]).to include("can't be blank")
     end
 
-    it  'ensures last name prsence' do
+    it 'ensures last name prsence' do
       student = Student.new
       student.firstName = 'First'
       student.user_id = User.first.id
@@ -24,6 +24,7 @@ RSpec.describe Student, type: :model do
     it 'saves successfully' do
       expect(Student.create!(:firstName => 'First', :lastName => 'Last', :user_id =>  User.first.id)).to be_valid
     end
+
   end
 end
  

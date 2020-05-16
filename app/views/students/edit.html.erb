@@ -7,6 +7,10 @@
   <li class="nav-item" data-label="Ranks">
     <a class="nav-link" href="#">Ranks</a>
   </li>
+  <li class="nav-item" data-label="Transactions">
+    <a class="nav-link" href="#">Transaction</a>
+  </li>
+
 </ul>
 
 <div class="tab-content">
@@ -49,6 +53,36 @@
               <td><%= rank.rankType %></td>
               <td><%= rank.total %></td>
               <td><%= rank.created_at.strftime("%m/%d/%Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <div class="tab-pane fade show transactions">
+    <% if @student.transactions.length === 0 %>
+      <div class="d-flex justify-content-between">
+        <h1>No transactions</h1>
+      </div>
+    <% else %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Masked Card</th>
+            <th>Amount</th>
+            <th>Tax</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @student.transactions.each do |t| %>
+            <tr>
+              <td><%= t.created_at.strftime("%m/%d/%Y") %></td>
+              <td><%= t.maskedPan %></td>
+              <td><%= number_to_currency(t.total) %></td>
+              <td><%= t.tax ? "Yes" : "No" %></td>
+              <td><i class="fas fa-receipt pointer"></i></td>
             </tr>
           <% end %>
         </tbody>

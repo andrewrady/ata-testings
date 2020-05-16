@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :transaction do
+    association :student
     total { 1.5 }
     tax { false }
     discount { 1.5 }
