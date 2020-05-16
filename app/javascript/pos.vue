@@ -154,7 +154,7 @@ export default {
     expYears() {
       let currentYear = new Date().getFullYear()
       let decade = 10
-      let results = [currentYear]
+      let results = []
       for(let i = 0; i < decade; i++) {
         results.push(currentYear++)
       }
@@ -194,6 +194,7 @@ export default {
         content.student = {
           id: this.activeStudent.id
         }
+        content.items = [...this.items]
         fetch('/v1/transactions', {
           method: 'post',
           headers: {

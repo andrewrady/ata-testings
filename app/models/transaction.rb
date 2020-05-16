@@ -3,4 +3,5 @@ class Transaction < ApplicationRecord
   has_many :transaction_items
 
   validates :total, presence: true
+
 end
