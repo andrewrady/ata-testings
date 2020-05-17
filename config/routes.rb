@@ -21,10 +21,10 @@ Rails.application.routes.draw do
     resources :inventory do
       post 'search', on: :collection
     end
-    resources :transactions, only: [:create]
+    resources :pos_records, only: [:create]
   end
 
   resources :available_ranks
   resources :inventory
-  resources :transactions, except: [:create]
+  resources :pos_records, except: [:create]
 end

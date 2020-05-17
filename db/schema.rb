@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200516051608) do
+ActiveRecord::Schema.define(version: 20200517195523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,43 @@ ActiveRecord::Schema.define(version: 20200516051608) do
     t.index ["testing_id"], name: "index_participants_on_testing_id"
   end
 
+  create_table "pos_records", force: :cascade do |t|
+    t.float "total"
+    t.boolean "tax"
+    t.float "discount"
+    t.string "authResponse"
+    t.string "authCode"
+    t.string "referenceNumber"
+    t.string "orderId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.boolean "isPartial"
+    t.string "partialId"
+    t.float "originalFullAmount"
+    t.float "partialAmountApproved"
+    t.string "avsResponse"
+    t.string "cvv2Response"
+    t.string "cardType"
+    t.string "last4"
+    t.string "maskedPan"
+    t.string "token"
+    t.string "action"
+    t.boolean "isError"
+    t.boolean "isSuccess"
+    t.index ["student_id"], name: "index_pos_records_on_student_id"
+  end
+
+  create_table "pos_records_items", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.bigint "transactions_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "tax"
+    t.index ["transactions_id"], name: "index_pos_records_items_on_transactions_id"
+  end
+
   create_table "ranks", force: :cascade do |t|
     t.string "name"
     t.integer "order"
@@ -96,43 +133,6 @@ ActiveRecord::Schema.define(version: 20200516051608) do
     t.index ["user_id"], name: "index_testings_on_user_id"
   end
 
-  create_table "transaction_items", force: :cascade do |t|
-    t.string "name"
-    t.float "price"
-    t.bigint "transactions_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "tax"
-    t.index ["transactions_id"], name: "index_transaction_items_on_transactions_id"
-  end
-
-  create_table "transactions", force: :cascade do |t|
-    t.float "total"
-    t.boolean "tax"
-    t.float "discount"
-    t.string "authResponse"
-    t.string "authCode"
-    t.string "referenceNumber"
-    t.string "orderId"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "student_id"
-    t.boolean "isPartial"
-    t.string "partialId"
-    t.float "originalFullAmount"
-    t.float "partialAmountApproved"
-    t.string "avsResponse"
-    t.string "cvv2Response"
-    t.string "cardType"
-    t.string "last4"
-    t.string "maskedPan"
-    t.string "token"
-    t.string "action"
-    t.boolean "isError"
-    t.boolean "isSuccess"
-    t.index ["student_id"], name: "index_transactions_on_student_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20200516051608) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pos_records", "students"
+  add_foreign_key "pos_records_items", "pos_records", column: "transactions_id"
   add_foreign_key "ranks", "students"
-  add_foreign_key "transaction_items", "transactions", column: "transactions_id"
-  add_foreign_key "transactions", "students"
 end

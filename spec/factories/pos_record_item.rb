@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :transaction_item do
+  factory :pos_record_item do
     name { "MyString" }
     price { 1.5 }
     quantity { 1 }

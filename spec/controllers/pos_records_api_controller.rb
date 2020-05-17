@@ -2,11 +2,11 @@ require 'rails_helper'
 require 'faker'
 require 'v1/transactions_controller'
 
-RSpec.describe V1::TransactionsController, type: :controller do
+RSpec.describe V1::PosRecordsController, type: :controller do
   before(:each) do
     User.create!(email: "test1@gmail.com", password: "password")
     Student.create!(firstName: Faker::Name, lastName: Faker::Name, user_id: User.first.id)
-    @transaction = Transaction.create!(total: 199.99, tax: 6, discount: 0, authResponse: "Approved 668013", authCode: "668013", referenceNumber: "576570", orderId: "635742957909628443", student_id: Student.first.id)
+    @transaction = PosRecord.create!(total: 199.99, tax: 6, discount: 0, authResponse: "Approved 668013", authCode: "668013", referenceNumber: "576570", orderId: "635742957909628443", student_id: Student.first.id)
   end
 
   describe "POST v1/transactions" do

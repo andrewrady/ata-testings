@@ -1,4 +1,4 @@
-class V1::TransactionsController < ApplicationController
+class V1::PosRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def create
@@ -22,7 +22,7 @@ class V1::TransactionsController < ApplicationController
     if(body[:validationHasFailed] == true)
       render json: { error: { key: body[:validationFailures][0][:key], value: body[:validationFailures][0][:message] }}, status: 422
     else
-      @transaction = Transaction.new(total: params[:total], tax: params[:tax],
+      @transaction = PosRecord.new(total: params[:total], tax: params[:tax],
         authCode: body[:data][:authCode], authResponse: body[:data][:authResponse], referenceNumber: body[:data][:referenceNumber],
         orderId: body[:data][:orderId], isPartial: body[:data][:isPartial], partialId: body[:data][:partialId], originalFullAmount: body[:data][:originalFullAmount],
         partialAmountApproved: body[:data][:partialAmountApproved], avsResponse: body[:data][:avsResponse], cvv2Response: body[:data][:cvv2Response],
@@ -31,7 +31,7 @@ class V1::TransactionsController < ApplicationController
 
       if @transaction.save!
         params[:items].each do |item|
-          @transactionItem = TransactionItem.new(price: item.price, name: item.name, tax: item.tax, transactions_id: @transaction.id)
+          @transactionItem = PosRecordItem.new(price: item.price, name: item.name, tax: item.tax, transactions_id: @transaction.id)
           @transaction.save
         end
         render json: @transaction, status: 200
