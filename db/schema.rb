@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200517195523) do
+ActiveRecord::Schema.define(version: 20200613225824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 20200517195523) do
     t.datetime "updated_at", null: false
     t.boolean "tax"
     t.index ["user_id"], name: "index_inventories_on_user_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.boolean "tax"
+    t.bigint "pos_record_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pos_record_id"], name: "index_items_on_pos_record_id"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -95,11 +105,11 @@ ActiveRecord::Schema.define(version: 20200517195523) do
   create_table "pos_records_items", force: :cascade do |t|
     t.string "name"
     t.float "price"
-    t.bigint "transactions_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "tax"
-    t.index ["transactions_id"], name: "index_pos_records_items_on_transactions_id"
+    t.bigint "pos_records_id"
+    t.index ["pos_records_id"], name: "index_pos_records_items_on_pos_records_id"
   end
 
   create_table "ranks", force: :cascade do |t|
@@ -145,7 +155,8 @@ ActiveRecord::Schema.define(version: 20200517195523) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "items", "pos_records"
   add_foreign_key "pos_records", "students"
-  add_foreign_key "pos_records_items", "pos_records", column: "transactions_id"
+  add_foreign_key "pos_records_items", "pos_records", column: "pos_records_id"
   add_foreign_key "ranks", "students"
 end

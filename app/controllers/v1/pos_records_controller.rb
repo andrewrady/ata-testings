@@ -2,7 +2,6 @@ class V1::PosRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def create
-    raise params.inspect
     requestObject = { 
       merchantKey: ENV["merchantKey"], 
       processorId: ENV["processorId"], 
@@ -28,11 +27,10 @@ class V1::PosRecordsController < ApplicationController
         partialAmountApproved: body[:data][:partialAmountApproved], avsResponse: body[:data][:avsResponse], cvv2Response: body[:data][:cvv2Response],
         cardType: body[:data][:cardType], last4: body[:data][:last4], maskedPan: body[:data][:maskedPan], token: body[:data][:token],
         action: body[:action], isError: body[:isError], isSuccess: body[:isSuccess], student_id: params[:student][:id])
-
       if @transaction.save!
         params[:items].each do |item|
-          @transactionItem = PosRecordItem.new(price: item.price, name: item.name, tax: item.tax, transactions_id: @transaction.id)
-          @transaction.save
+          @transactionItem = Item.new(price: item[:price], name: item[:name], tax: item[:tax], pos_record_id: @transaction.id)
+          @transactionItem.save!
         end
         render json: @transaction, status: 200
       else

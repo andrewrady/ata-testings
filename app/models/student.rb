@@ -1,7 +1,7 @@
 class Student < ApplicationRecord
   belongs_to :user
   has_many :ranks, :dependent => :destroy
-  has_many :transactions
+  has_many :pos_records
 
   validates :firstName, presence: true
   validates :lastName, presence: true

@@ -195,7 +195,7 @@ export default {
           id: this.activeStudent.id
         }
         content.items = [...this.items]
-        fetch('/v1/transactions', {
+        fetch('/v1/pos_records', {
           method: 'post',
           headers: {
             'content-type': 'application/json'
