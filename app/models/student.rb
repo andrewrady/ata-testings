@@ -8,4 +8,5 @@ class Student < ApplicationRecord
   validates :lastName, presence: true
 
   accepts_nested_attributes_for :ranks
+  accepts_nested_attributes_for :addresses
 end

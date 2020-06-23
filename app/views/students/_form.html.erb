@@ -33,6 +33,33 @@
         <div class="col"></div>
       </div>
     </div>
+    <hr>
+    <h2>Address</h2>
+    <%= form.fields_for :addresses, Address.new do |address| %>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <%= address.label :street1, "Street" %>
+            <%= address.text_field :street1, :class => "form-control", placeholder: "Primary Street" %>
+          </div>
+          <div class="col">
+            <%= address.label :city %>
+            <%= address.text_field :city, :class => "form-control", placeholder: "City" %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <%= address.label :state %>
+            <%= address.select :state, options_for_select(['Idaho']), {}, { :class => "form-control" } %>
+          </div>
+          <div class="col">
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+    
     <%= form.submit 'Submit', :class => "btn btn-primary" %>
   </div>
 <% end %>
