@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200623131212) do
+ActiveRecord::Schema.define(version: 20200629213539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(version: 20200623131212) do
     t.string "state"
     t.integer "zip"
     t.string "county"
-    t.string "type"
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "city"
+    t.boolean "isPrimary"
     t.index ["student_id"], name: "index_addresses_on_student_id"
   end
 
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 20200623131212) do
     t.string "rankType"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "email_addresses", force: :cascade do |t|
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.boolean "isPrimary"
+    t.index ["student_id"], name: "index_email_addresses_on_student_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -170,6 +179,7 @@ ActiveRecord::Schema.define(version: 20200623131212) do
   end
 
   add_foreign_key "addresses", "students"
+  add_foreign_key "email_addresses", "students"
   add_foreign_key "items", "pos_records"
   add_foreign_key "pos_records", "students"
   add_foreign_key "pos_records_items", "pos_records", column: "pos_records_id"

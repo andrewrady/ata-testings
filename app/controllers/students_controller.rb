@@ -19,14 +19,8 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
     @student.user_id = current_user.id
 
-    if @student.save
-      @address = @student.addresses.new(address_params)
-      @address.type = "Primary"
-      if @address.save!
-        redirect_to edit_student_path(@student)
-      else
-        render 'new'
-      end
+    if @student.save!
+      redirect_to edit_student_path(@student)
     else
       render 'new'
     end
@@ -55,13 +49,10 @@ class StudentsController < ApplicationController
   end
 
   private
-
     def student_params
-      params.require(:student).permit(:firstName, :lastName, :size, ranks_attributes: [:name, :order, :rankType])
+      params.require(:student).permit(:firstName, :lastName, :size, 
+        ranks_attributes: [:name, :order, :rankType], 
+        addresses_attributes: [:street1, :street2, :state, :zip, :county],
+        email_addresses_attributes: [:email, :isPrimary])
     end
-
-    def address_params
-      params.require(:address).permit(:street1, :street2, :state, :zip, :county)
-    end
-
 end

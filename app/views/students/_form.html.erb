@@ -30,33 +30,45 @@
           <%= form.label :size, "Size" %>
           <%= form.number_field :size, :class => "form-control", placeholder: "size" %>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <% if action_name == "new" %>
+            <%= form.fields_for :email_addresses, EmailAddress.new do |email| %>
+              <%= email.label :email_addresses, "Email" %>
+              <%= email.text_field :email, :class => "form-control" %>
+              <%= email.check_box :isPrimary, :checked => true, :class => "d-none" %>
+            <% end %>
+          <%end %>
+        </div>
       </div>
     </div>
-    <hr>
-    <h2>Address</h2>
-    <%= form.fields_for :addresses, Address.new do |address| %>
-      <div class="form-group">
-        <div class="form-row">
-          <div class="col">
-            <%= address.label :street1, "Street" %>
-            <%= address.text_field :street1, :class => "form-control", placeholder: "Primary Street" %>
+    <% if action_name === "new" %>
+      <hr>
+      <h2>Address</h2>
+      <%= form.fields_for :addresses, Address.new do |address| %>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col">
+              <%= address.label :street1, "Street" %>
+              <%= address.text_field :street1, :class => "form-control", placeholder: "Primary Street" %>
+            </div>
+            <div class="col">
+              <%= address.label :city %>
+              <%= address.text_field :city, :class => "form-control", placeholder: "City" %>
+            </div>
           </div>
-          <div class="col">
-            <%= address.label :city %>
-            <%= address.text_field :city, :class => "form-control", placeholder: "City" %>
+          <div class="form-row">
+            <div class="col">
+              <%= address.label :state %>
+              <%= address.select :state, options_for_select(['Idaho']), {}, { :class => "form-control" } %>
+            </div>
+            <div class="col">
+              <%= address.label :zip %>
+              <%= address.text_field :zip, :class => "form-control", placeholder: "Zip" %>
+            </div>
           </div>
+              <%= address.check_box :isPrimary, :checked => true, :class => "d-none" %>
         </div>
-        <div class="form-row">
-          <div class="col">
-            <%= address.label :state %>
-            <%= address.select :state, options_for_select(['Idaho']), {}, { :class => "form-control" } %>
-          </div>
-          <div class="col">
-
-          </div>
-        </div>
-      </div>
+      <% end %>
     <% end %>
     
     
