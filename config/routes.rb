@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root "testings#index"
   resources :students do
+    resources :waivers, only: [:new, :create]
     resources :ranks
   end
 

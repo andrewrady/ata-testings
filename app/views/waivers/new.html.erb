@@ -1,0 +1,57 @@
+<h1 class="text-center">Online Waiver</h1>
+<div class="container px-5">
+  <form class="mx-5">
+    <h3>Student Info</h3>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <label>First Name</label>
+          <input readonly class="form-control-plaintext" value="<%= @student.firstName %>" />
+        </div>
+        <div class="col">
+          <label>Last Name</label>
+          <input readonly class="form-control-plaintext" value="<%= @student.lastName %>" />
+        </div>
+        <% if @primaryEmail %>
+          <div class="col">
+            <label>Email</label>
+            <input readonly class="form-control-plaintext" value="<%= @primaryEmail.email %>" />
+          </div>
+        <% end %>
+      </div>
+      <% if @primaryAddress != nil %>
+        <div class="form-row">
+          <div class="col">
+            <label>Address</label>
+            <input readonly class="form-control-plaintext" value="<%= @primaryAddress.street1 %>" />
+          </div>
+          <div class="col">
+            <label>City</label>
+            <% if @primaryAddress.city %>
+              <input readonly class="form-control-plaintext" value="<%= @primaryAddress.city %>"/>
+            <% else %>
+              <br>
+              <i class="fa fa-ban text-secondary" aria-hidden="true"></i>
+            <% end %>
+          </div>
+          <div class="col">
+            <label>State</label>
+            <input readonly class="form-control-plaintext" value="<%= @primaryAddress.state %>"/>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </form>
+  <hr>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ligula tortor, sodales sit amet lorem eget, vulputate pellentesque tortor. Curabitur hendrerit sem nec blandit ornare. Phasellus vel sagittis diam. Quisque mollis quam vel mi sodales, ornare condimentum ante facilisis. Sed finibus facilisis mauris pretium elementum. Nam eros eros, dignissim at venenatis vel, aliquam nec dolor. Duis porta ultrices justo in facilisis. Aenean aliquam pellentesque lorem, et porttitor sem elementum ut. Praesent mattis accumsan ex, ac aliquam lectus cursus id. Mauris blandit tincidunt arcu, at sodales nisi faucibus vehicula. Suspendisse nec dapibus nunc, vel bibendum enim.
+    Phasellus in tortor efficitur, gravida elit non, tempor justo. Ut tincidunt eleifend mollis. Sed tempus, nulla vitae venenatis aliquet, massa erat tempus nulla, vel posuere nibh purus vulputate erat. Nulla lacinia commodo accumsan. Mauris porta ultricies justo at varius. Donec finibus nisl varius ultrices vestibulum. Morbi lobortis, massa vitae luctus elementum, tellus libero convallis lectus, rhoncus tristique arcu orci vitae eros. Nulla et magna sit amet enim placerat porttitor quis ac massa. Maecenas et tempor mauris. Proin consequat viverra justo sollicitudin pretium. Cras et neque non risus aliquet facilisis eu sit amet nisi. Sed id nulla vitae arcu vulputate finibus. Curabitur commodo ligula eu gravida imperdiet. Aenean eget sem in lorem lacinia volutpat sit amet quis ex.
+  </p>
+  <%= form_with(model: @student, local: true, html: {class: "d-flex flex-column justify-content-center"}) do |student| %>
+    <div class="form-check">
+      <%= student.check_box :waiver, :class => "form-check-input" %>
+      <label class="form-check-label">By checking this you acknowledge you have read the terms and agree</label>
+    </div>
+    <%= student.submit "submit", class: "btn btn-primary w-25" %>
+  <% end %>
+</div>
