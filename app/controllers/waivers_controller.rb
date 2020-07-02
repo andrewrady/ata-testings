@@ -8,6 +8,18 @@ class WaiversController < ApplicationController
   end
 
   def create
+    @student = Student.find(params[:student_id])
 
+    if @student.update(waiver_params)
+      redirect_to edit_student_path(@student)
+    else
+      render 'new'
+    end
   end
+
+  private
+
+    def waiver_params
+      params.require(:student).permit(:waiver, :guardianFirstName, :guardianLastName)
+    end
 end

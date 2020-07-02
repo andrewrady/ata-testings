@@ -1,4 +1,11 @@
-<h1 class="py-2"><%= @student.firstName %> <%= @student.lastName %></h1>
+<div class="d-flex align-items-center">
+  <h1 class="py-2"><%= @student.firstName %> <%= @student.lastName %></h1>
+  <% if @student.waiver != true %> 
+    <%= link_to  new_student_waiver_path(@student) do %>
+      <i class="fas fa-exclamation-circle text-danger mx-3 fa-2x" title="waiver's not signed"></i> 
+    <% end %>
+  <% end %>
+</div>
 
 <ul class="nav nav-tabs my-3">
   <li class="nav-item" data-label="General">

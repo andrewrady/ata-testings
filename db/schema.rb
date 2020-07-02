@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200630030318) do
+ActiveRecord::Schema.define(version: 20200630195301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,9 @@ ActiveRecord::Schema.define(version: 20200630030318) do
     t.integer "user_id"
     t.boolean "waiver"
     t.datetime "signedDate"
+    t.datetime "dateOfBirth"
+    t.string "guardianFirstName"
+    t.string "guardianLastName"
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 

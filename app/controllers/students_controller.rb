@@ -20,7 +20,7 @@ class StudentsController < ApplicationController
     @student.user_id = current_user.id
 
     if @student.save!
-      redirect_to edit_student_path(@student)
+      redirect_to new_student_waiver_path(@student)
     else
       render 'new'
     end
@@ -50,9 +50,9 @@ class StudentsController < ApplicationController
 
   private
     def student_params
-      params.require(:student).permit(:firstName, :lastName, :size, 
+      params.require(:student).permit(:firstName, :lastName, :size, :dateOfBirth,
         ranks_attributes: [:name, :order, :rankType], 
-        addresses_attributes: [:street1, :street2, :state, :zip, :county],
+        addresses_attributes: [:street1, :street2, :state, :zip, :county, :isPrimary],
         email_addresses_attributes: [:email, :isPrimary])
     end
 end
