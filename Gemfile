@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem "pg", "~> 0.18"
+gem "pg"
 gem "nokogiri", ">= 1.10.4"
 gem 'faraday'
 gem 'webpacker', '~> 4.x'
