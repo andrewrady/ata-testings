@@ -46,15 +46,6 @@ ActiveRecord::Schema.define(version: 20200630195301) do
     t.index ["student_id"], name: "index_email_addresses_on_student_id"
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.string "title"
-    t.integer "testings_id"
-    t.datetime "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["testings_id"], name: "index_groups_on_testings_id"
-  end
-
   create_table "inventories", force: :cascade do |t|
     t.string "name"
     t.float "price"
@@ -79,8 +70,8 @@ ActiveRecord::Schema.define(version: 20200630195301) do
   end
 
   create_table "participants", force: :cascade do |t|
-    t.integer "testing_id"
-    t.integer "student_id"
+    t.bigint "testing_id"
+    t.bigint "student_id"
     t.integer "form"
     t.integer "sparring"
     t.integer "weapon"
@@ -152,7 +143,7 @@ ActiveRecord::Schema.define(version: 20200630195301) do
     t.integer "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.boolean "waiver"
     t.datetime "signedDate"
     t.datetime "dateOfBirth"
@@ -167,7 +158,7 @@ ActiveRecord::Schema.define(version: 20200630195301) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "date"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_testings_on_user_id"
   end
 
@@ -186,7 +177,11 @@ ActiveRecord::Schema.define(version: 20200630195301) do
   add_foreign_key "addresses", "students"
   add_foreign_key "email_addresses", "students"
   add_foreign_key "items", "pos_records"
+  add_foreign_key "participants", "students"
+  add_foreign_key "participants", "testings"
   add_foreign_key "pos_records", "students"
   add_foreign_key "pos_records_items", "pos_records", column: "pos_records_id"
   add_foreign_key "ranks", "students"
+  add_foreign_key "students", "users"
+  add_foreign_key "testings", "users"
 end
