@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :students do
     resources :waivers, only: [:new, :create]
     resources :ranks
+    resources :pos_records do
+      resources :charges
+    end
   end
 
   resources :testings do

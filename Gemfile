@@ -36,6 +36,7 @@ gem "pg"
 gem "nokogiri", ">= 1.10.4"
 gem 'faraday'
 gem 'webpacker', '~> 4.x'
+gem 'receipts'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
