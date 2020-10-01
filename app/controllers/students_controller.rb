@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @students = Student.all.where(:user_id => current_user).joins(:ranks).order("ranks.order")
+    @students = Student.all.where(:user_id => current_user).order(:lastName)
   end
 
   def show
