@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: AtaTestingApp
+  database: MaVueApp
 
 test:
   <<: *default
-  database: AtaTestingApp_test
+  database: MaVueApp_test
 
 production:
   <<: *default
