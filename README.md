@@ -5,6 +5,10 @@ A CRM that is being developed for ATA schools to run their business as effective
 ## Ruby version
 ruby version 2.4.2
 
+## Start Postgres locally
+To start postgress locally in linux
+`sudo /etc/init.d/postgresql start`
+
 ## Database creation
 Local development uses Postgres to match production. The configuration is in `database.yml` file so you can connect to your local client
 

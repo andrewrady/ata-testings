@@ -11,8 +11,8 @@ class PosRecord < ApplicationRecord
       subheading: "RECEIPT FOR CHARGE #%{id}",
       product: "",
       company: {
-        name: "Fusion Martial Arts"
-        address: "8511 W Overland Rd \nBoise, ID 83709"
+        name: "Fusion Martial Arts",
+        address: "8511 W Overland Rd \nBoise, ID 83709",
         email: "traditionalata@gmail.com",
       },
       line_items: [
